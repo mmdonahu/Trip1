@@ -7,60 +7,70 @@
 
 import SwiftUI
 
-struct ContentView: View {
-    @State private var fadeInAnimation = false
+struct TestView: View {
+    let rules = [
+        "1, Visiting designated checkpoints will earn you special Cards unique to you.",
+        "2, Collecting badges will increase your Hunter Rank.",
+        "3, The HUNTER Rank goes from : Zero, Single, Double, Triple, Master",
+        "4, There are Global Hunter Ranks and Country-specific Hunter Ranks.",
+        "5, Start with Japan and gradually more checkpoints around the world will become available."
+    ]
+    
+    @AppStorage("hasViewedRuleDescription") private var isFirstTime = true
+    @State private var showMainTabView = false
     
     var body: some View {
-        NavigationView { // ここでNavigationViewを追加
-            VStack(spacing: 20) {
-                Image("Trip Collector Logo")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height / 2)
-                    .clipped()
-                    .opacity(fadeInAnimation ? 1 : 0)
-                    .animation(.easeIn(duration: 1.5), value: fadeInAnimation)
-                    .onAppear {
-                        fadeInAnimation = true
+        ZStack {
+            VideoBackgroundView()
+            
+            VStack {
+                Text("Rule Book")
+                    .font(.system(size: 36, weight: .bold, design: .rounded))
+                    .foregroundColor(.white)
+                    .shadow(radius: 2)
+                    .padding()
+                    .frame(maxWidth: .infinity, alignment: .center)
+                
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack(alignment: .leading, spacing: 10) {
+                        ForEach(rules, id: \.self) { rule in
+                            Text(rule)
+                                .padding()
+                                .foregroundColor(.white)
+                                .background(Color.black.opacity(0.6))
+                                .cornerRadius(10)
+                                .shadow(radius: 3)
+                        }
                     }
-                
-                Button(action: {
-                    // Google認証の処理
-                }) {
-                    Text("Sign up with Google")
-                        .foregroundColor(.white)
-                        .frame(width: UIScreen.main.bounds.width - 40, height: 50)
-                        .background(Color.red)
-                        .cornerRadius(10)
-                }
-                
-                Button(action: {
-                    // Facebook認証の処理
-                }) {
-                    Text("Sign up with Facebook")
-                        .foregroundColor(.white)
-                        .frame(width: UIScreen.main.bounds.width - 40, height: 50)
-                        .background(Color.blue)
-                        .cornerRadius(10)
-                }
-                
-                NavigationLink(destination: SignupView()) { // NavigationLinkを使用してSignupViewへ遷移
-                    Text("Sign up with E-mail and Password")
-                        .foregroundColor(.white)
-                        .frame(width: UIScreen.main.bounds.width - 40, height: 50)
-                        .background(Color.gray)
-                        .cornerRadius(10)
+                    .padding(.horizontal)
                 }
             }
-            .padding(.top, -50)
+            
+            // 初回表示時のみボタンを画面中央に表示
+            if isFirstTime {
+                Button("Start your journey!") {
+                    isFirstTime = false
+                    showMainTabView = true
+                }
+                .padding()
+                .foregroundColor(.white)
+                .background(Color.blue)
+                .cornerRadius(10)
+                .shadow(radius: 3)
+                .frame(width: 220, height: 50)
+                .position(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height / 2)
+            }
+        }
+        .edgesIgnoringSafeArea(.all)
+        .fullScreenCover(isPresented: $showMainTabView) {
+            MainTabView()
         }
     }
 }
 
-// Preview
-struct ContentView_Previews: PreviewProvider {
+struct TestView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        TestView()
     }
 }
 

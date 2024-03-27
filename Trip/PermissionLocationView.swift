@@ -6,16 +6,17 @@
 //
 
 import SwiftUI
-import CoreLocation // 位置情報サービスを使用するために必要
+import CoreLocation
 
 struct PermissionLocationView: View {
-    // 位置情報サービスの状態を管理するための変数
     @State private var locationPermissionGranted = false
+    // CLLocationManagerのインスタンスはここで保持する
+    private let locationManager = CLLocationManager()
     
     var body: some View {
         VStack {
             Spacer()
-            Image(systemName: "location.circle.fill") // システム提供の位置情報アイコン
+            Image(systemName: "location.circle.fill")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 100, height: 100)
@@ -28,7 +29,7 @@ struct PermissionLocationView: View {
                 .padding()
             
             Button(action: {
-                // ここに位置情報の許可を求める処理を挿入
+                // 位置情報の許可を求める処理
                 requestLocationPermission()
             }) {
                 Text("Allow the use of location information")
@@ -39,16 +40,38 @@ struct PermissionLocationView: View {
             }
             Spacer()
         }
+        .onChange(of: locationPermissionGranted) { newValue in
+            if newValue {
+                // 位置情報が許可されたらRuleDescriptionViewへ遷移
+                // この部分はあなたのアプリのナビゲーションフローに合わせて調整してください
+                showRuleDescriptionView()
+            }
+        }
+        .onAppear {
+            // ビューが表示されたときに位置情報の許可状態を確認
+            checkLocationAuthorizationStatus()
+        }
     }
     
     private func requestLocationPermission() {
-        // CLLocationManagerのインスタンスを作成
-        let locationManager = CLLocationManager()
-        // 位置情報サービスの使用許可をリクエスト
         locationManager.requestWhenInUseAuthorization()
-        
-        // ここで、位置情報の許可状態に基づいて、必要な処理を行う
-        // 例: ユーザーの現在地を取得する、位置情報許可の状態を確認する、など
+        checkLocationAuthorizationStatus()
+    }
+    
+    private func checkLocationAuthorizationStatus() {
+        switch CLLocationManager.authorizationStatus() {
+        case .authorizedWhenInUse, .authorizedAlways:
+            // 位置情報の使用が許可されている場合
+            locationPermissionGranted = true
+        default:
+            // その他の場合、許可されていない
+            locationPermissionGranted = false
+        }
+    }
+    
+    private func showRuleDescriptionView() {
+        // RuleDescriptionViewへの遷移処理をここに記述
+        // 例: NavigationLinkのisActiveをtrueにする、画面遷移のためのカスタムメソッド呼び出し等
     }
 }
 

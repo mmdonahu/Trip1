@@ -9,18 +9,21 @@
 /* Begin PBXBuildFile section */
 		1B01CB59FD490FF50FF08B46 /* Pods_Trip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74733B397EB7C51F38B13779 /* Pods_Trip.framework */; };
 		992BB8712BA3D91400825A55 /* Sky.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 992BB8702BA3D91400825A55 /* Sky.mp4 */; };
+		994E878D2BABC7F700956C69 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 994E878C2BABC7F700956C69 /* GoogleService-Info.plist */; };
+		994E878F2BABCA2200956C69 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994E878E2BABCA2200956C69 /* SignupView.swift */; };
+		9962A1C22BA41AF40011B320 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9962A1C12BA41AF40011B320 /* LocationManager.swift */; };
 		99E196E12BA3D2C7009CE1E4 /* TripApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E196E02BA3D2C7009CE1E4 /* TripApp.swift */; };
-		99E196E32BA3D2C7009CE1E4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E196E22BA3D2C7009CE1E4 /* ContentView.swift */; };
+		99E196E32BA3D2C7009CE1E4 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E196E22BA3D2C7009CE1E4 /* TestView.swift */; };
 		99E196E52BA3D2C8009CE1E4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99E196E42BA3D2C8009CE1E4 /* Assets.xcassets */; };
 		99E196E82BA3D2C8009CE1E4 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99E196E72BA3D2C8009CE1E4 /* Preview Assets.xcassets */; };
 		99E196EF2BA3D455009CE1E4 /* DestinationMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E196EE2BA3D455009CE1E4 /* DestinationMapView.swift */; };
 		99E196F12BA3D478009CE1E4 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E196F02BA3D478009CE1E4 /* HomeView.swift */; };
-		99E196F32BA3D49A009CE1E4 /* IntroductionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E196F22BA3D49A009CE1E4 /* IntroductionView.swift */; };
+		99E196F32BA3D49A009CE1E4 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E196F22BA3D49A009CE1E4 /* ContentView.swift */; };
 		99E196F52BA3D4AB009CE1E4 /* MomentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E196F42BA3D4AB009CE1E4 /* MomentView.swift */; };
 		99E196F72BA3D4C2009CE1E4 /* PermissionLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E196F62BA3D4C2009CE1E4 /* PermissionLocationView.swift */; };
 		99E196F92BA3D4E3009CE1E4 /* RuleDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E196F82BA3D4E3009CE1E4 /* RuleDescriptionView.swift */; };
 		99E196FB2BA3D523009CE1E4 /* SnsShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E196FA2BA3D523009CE1E4 /* SnsShareView.swift */; };
-		99E196FD2BA3D539009CE1E4 /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E196FC2BA3D539009CE1E4 /* TabView.swift */; };
+		99E196FD2BA3D539009CE1E4 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E196FC2BA3D539009CE1E4 /* MainTabView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,19 +31,22 @@
 		46FB16F6ED6A968D7BEFB98D /* Pods-Trip.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trip.debug.xcconfig"; path = "Target Support Files/Pods-Trip/Pods-Trip.debug.xcconfig"; sourceTree = "<group>"; };
 		74733B397EB7C51F38B13779 /* Pods_Trip.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trip.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		992BB8702BA3D91400825A55 /* Sky.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sky.mp4; sourceTree = "<group>"; };
+		994E878C2BABC7F700956C69 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		994E878E2BABCA2200956C69 /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
+		9962A1C12BA41AF40011B320 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		99E196DD2BA3D2C7009CE1E4 /* Trip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		99E196E02BA3D2C7009CE1E4 /* TripApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripApp.swift; sourceTree = "<group>"; };
-		99E196E22BA3D2C7009CE1E4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		99E196E22BA3D2C7009CE1E4 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		99E196E42BA3D2C8009CE1E4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		99E196E72BA3D2C8009CE1E4 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		99E196EE2BA3D455009CE1E4 /* DestinationMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationMapView.swift; sourceTree = "<group>"; };
 		99E196F02BA3D478009CE1E4 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
-		99E196F22BA3D49A009CE1E4 /* IntroductionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionView.swift; sourceTree = "<group>"; };
+		99E196F22BA3D49A009CE1E4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		99E196F42BA3D4AB009CE1E4 /* MomentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentView.swift; sourceTree = "<group>"; };
 		99E196F62BA3D4C2009CE1E4 /* PermissionLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionLocationView.swift; sourceTree = "<group>"; };
 		99E196F82BA3D4E3009CE1E4 /* RuleDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleDescriptionView.swift; sourceTree = "<group>"; };
 		99E196FA2BA3D523009CE1E4 /* SnsShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnsShareView.swift; sourceTree = "<group>"; };
-		99E196FC2BA3D539009CE1E4 /* TabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabView.swift; sourceTree = "<group>"; };
+		99E196FC2BA3D539009CE1E4 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,15 +100,18 @@
 			isa = PBXGroup;
 			children = (
 				99E196E02BA3D2C7009CE1E4 /* TripApp.swift */,
-				99E196F22BA3D49A009CE1E4 /* IntroductionView.swift */,
-				99E196E22BA3D2C7009CE1E4 /* ContentView.swift */,
+				99E196F22BA3D49A009CE1E4 /* ContentView.swift */,
+				994E878E2BABCA2200956C69 /* SignupView.swift */,
 				99E196F62BA3D4C2009CE1E4 /* PermissionLocationView.swift */,
-				99E196F82BA3D4E3009CE1E4 /* RuleDescriptionView.swift */,
-				99E196FC2BA3D539009CE1E4 /* TabView.swift */,
+				99E196FC2BA3D539009CE1E4 /* MainTabView.swift */,
 				99E196F02BA3D478009CE1E4 /* HomeView.swift */,
 				99E196EE2BA3D455009CE1E4 /* DestinationMapView.swift */,
 				99E196FA2BA3D523009CE1E4 /* SnsShareView.swift */,
 				99E196F42BA3D4AB009CE1E4 /* MomentView.swift */,
+				99E196F82BA3D4E3009CE1E4 /* RuleDescriptionView.swift */,
+				9962A1C12BA41AF40011B320 /* LocationManager.swift */,
+				994E878C2BABC7F700956C69 /* GoogleService-Info.plist */,
+				99E196E22BA3D2C7009CE1E4 /* TestView.swift */,
 				992BB8702BA3D91400825A55 /* Sky.mp4 */,
 				99E196E42BA3D2C8009CE1E4 /* Assets.xcassets */,
 				99E196E62BA3D2C8009CE1E4 /* Preview Content */,
@@ -130,6 +139,7 @@
 				99E196DA2BA3D2C7009CE1E4 /* Frameworks */,
 				99E196DB2BA3D2C7009CE1E4 /* Resources */,
 				61526B446E577F3CA282D05E /* [CP] Copy Pods Resources */,
+				E30DA4203EA5DA74D4264FFC /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -179,6 +189,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				992BB8712BA3D91400825A55 /* Sky.mp4 in Resources */,
+				994E878D2BABC7F700956C69 /* GoogleService-Info.plist in Resources */,
 				99E196E82BA3D2C8009CE1E4 /* Preview Assets.xcassets in Resources */,
 				99E196E52BA3D2C8009CE1E4 /* Assets.xcassets in Resources */,
 			);
@@ -226,6 +237,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Trip/Pods-Trip-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		E30DA4203EA5DA74D4264FFC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Trip/Pods-Trip-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Trip/Pods-Trip-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Trip/Pods-Trip-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -233,12 +261,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				99E196FD2BA3D539009CE1E4 /* TabView.swift in Sources */,
+				994E878F2BABCA2200956C69 /* SignupView.swift in Sources */,
+				99E196FD2BA3D539009CE1E4 /* MainTabView.swift in Sources */,
 				99E196EF2BA3D455009CE1E4 /* DestinationMapView.swift in Sources */,
-				99E196F32BA3D49A009CE1E4 /* IntroductionView.swift in Sources */,
+				99E196F32BA3D49A009CE1E4 /* ContentView.swift in Sources */,
+				9962A1C22BA41AF40011B320 /* LocationManager.swift in Sources */,
 				99E196F12BA3D478009CE1E4 /* HomeView.swift in Sources */,
 				99E196F92BA3D4E3009CE1E4 /* RuleDescriptionView.swift in Sources */,
-				99E196E32BA3D2C7009CE1E4 /* ContentView.swift in Sources */,
+				99E196E32BA3D2C7009CE1E4 /* TestView.swift in Sources */,
 				99E196FB2BA3D523009CE1E4 /* SnsShareView.swift in Sources */,
 				99E196F52BA3D4AB009CE1E4 /* MomentView.swift in Sources */,
 				99E196F72BA3D4C2009CE1E4 /* PermissionLocationView.swift in Sources */,

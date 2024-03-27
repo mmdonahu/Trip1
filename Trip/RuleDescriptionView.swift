@@ -16,16 +16,17 @@ struct RuleDescriptionView: View {
         "5, Start with Japan and gradually more checkpoints around the world will become available."
     ]
     
+    @AppStorage("hasViewedRuleDescription") private var isFirstTime = true
+    @State private var showMainTabView = false
+    
     var body: some View {
         GeometryReader { geometry in
             ZStack {
                 VideoBackgroundView()
                 
                 VStack(spacing: 0) {
-                    // 上部の余白
                     Spacer(minLength: geometry.safeAreaInsets.top)
                     
-                    // タイトル
                     Text("Rule Book")
                         .font(.system(size: 36, weight: .bold, design: .rounded))
                         .foregroundColor(.white)
@@ -33,10 +34,8 @@ struct RuleDescriptionView: View {
                         .padding(.horizontal)
                         .frame(maxWidth: .infinity, alignment: .center)
                     
-                    // 余白
                     Spacer(minLength: 40)
                     
-                    // 中央寄せスクロールビュー
                     ScrollView(.vertical, showsIndicators: false) {
                         VStack(alignment: .leading, spacing: 10) {
                             ForEach(rules, id: \.self) { rule in
@@ -47,17 +46,31 @@ struct RuleDescriptionView: View {
                                     .cornerRadius(10)
                                     .shadow(radius: 3)
                             }
+                            // 初回表示時のみボタンを表示
+                            if isFirstTime {
+                                Button("Start your journey!") {
+                                    isFirstTime = false
+                                    showMainTabView = true
+                                }
+                                .padding()
+                                .foregroundColor(.white)
+                                .background(Color.blue)
+                                .cornerRadius(10)
+                                .shadow(radius: 3)
+                            }
                         }
                         .padding(.horizontal)
                     }
                     .frame(maxWidth: .infinity)
                     
-                    // 下部の余白
                     Spacer(minLength: geometry.safeAreaInsets.bottom)
                 }
                 .frame(width: geometry.size.width, height: geometry.size.height)
             }
             .edgesIgnoringSafeArea(.all)
+        }
+        .fullScreenCover(isPresented: $showMainTabView) {
+            MainTabView()
         }
     }
 }
