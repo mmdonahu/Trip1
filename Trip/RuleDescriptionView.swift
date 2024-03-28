@@ -41,43 +41,47 @@ struct RuleDescriptionView: View {
                             ForEach(rules, id: \.self) { rule in
                                 Text(rule)
                                     .padding()
+                                    .padding(.horizontal, 20)
                                     .foregroundColor(.white)
                                     .background(Color.black.opacity(0.6))
                                     .cornerRadius(10)
                                     .shadow(radius: 3)
                             }
                             // 初回表示時のみボタンを表示
+                            Spacer()
                             if isFirstTime {
-                                Button("Start your journey!") {
-                                    isFirstTime = false
-                                    showMainTabView = true
+                                HStack{
+                                    Spacer()
+                                    Button("Start your journey!") {
+                                        isFirstTime = false
+                                        showMainTabView = true
+                                    }
+                                    .padding()
+                                    .foregroundColor(.white)
+                                    .background(Color.blue)
+                                    .cornerRadius(10)
+                                    .shadow(radius: 3)
+                                    Spacer()
                                 }
-                                .padding()
-                                .foregroundColor(.white)
-                                .background(Color.blue)
-                                .cornerRadius(10)
-                                .shadow(radius: 3)
                             }
                         }
-                        .padding(.horizontal)
+                        .frame(maxWidth: .infinity)
                     }
-                    .frame(maxWidth: .infinity)
-                    
-                    Spacer(minLength: geometry.safeAreaInsets.bottom)
+                        Spacer(minLength: geometry.safeAreaInsets.bottom)
+                    }
+                    .frame(width: geometry.size.width, height: geometry.size.height)
                 }
-                .frame(width: geometry.size.width, height: geometry.size.height)
+                .edgesIgnoringSafeArea(.all)
             }
-            .edgesIgnoringSafeArea(.all)
-        }
-        .fullScreenCover(isPresented: $showMainTabView) {
-            MainTabView()
+            .fullScreenCover(isPresented: $showMainTabView) {
+                MainTabView()
+            }
         }
     }
-}
 
-struct RuleDescriptionView_Previews: PreviewProvider {
-    static var previews: some View {
-        RuleDescriptionView()
+    struct RuleDescriptionView_Previews: PreviewProvider {
+        static var previews: some View {
+            RuleDescriptionView()
+        }
     }
-}
 
