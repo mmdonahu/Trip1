@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-// SwiftUIの組み込みの`TabView`と名前が衝突しないように、名前を変更しています。
 struct MainTabView: View {
     var body: some View {
         TabView {
@@ -37,7 +36,7 @@ struct MainTabView: View {
     }
 }
 
-// プレビューも名前を更新します。
+
 struct MainTabView_Previews: PreviewProvider {
     static var previews: some View {
         MainTabView()

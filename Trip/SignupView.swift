@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseAuth
+import FirebaseFirestore // Firestoreをインポート
 
 struct SignupView: View {
     @State private var fadeInAnimation = false
@@ -42,11 +43,27 @@ struct SignupView: View {
                 .foregroundColor(.red)
             
             Button(action: {
+                // ユーザー作成処理
                 Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
                     if let error = error {
                         self.errorMessage = error.localizedDescription
                     } else {
                         self.errorMessage = "Succeed Sign up！🎉"
+                        // Firestoreにユーザー情報を保存
+                        if let userId = authResult?.user.uid {
+                            let db = Firestore.firestore()
+                            db.collection("users").document(userId).setData([
+                                "email": self.email // ユーザーのemailを保存
+                                // 必要に応じて他の情報もここに追加
+                            ]) { err in
+                                if let err = err {
+                                    print("Error adding document: \(err)")
+                                    self.errorMessage = "Firestore save error: \(err.localizedDescription)"
+                                } else {
+                                    print("Document added with ID: \(userId)")
+                                }
+                            }
+                        }
                         showPermissionLocationView = true
                     }
                 }

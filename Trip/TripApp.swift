@@ -21,12 +21,21 @@ struct TripApp: App {
     
     var body: some Scene {
         WindowGroup {
-            if hasLaunchedOnce {
+            // 環境変数に基づいて特定のビューを直接表示するかを決定
+            if let debugView = ProcessInfo.processInfo.environment["DEBUG_VIEW"], !debugView.isEmpty {
+                // 'PermissionLocationView'が指定された場合、そのビューを直接表示
+                if debugView == "MainTabView" {
+                    MainTabView()
+                } else {
+                    // 指定されたビューが見つからない場合のフォールバック
+                    ContentView() // 初期ビューまたはデフォルトビュー
+                }
+            } else if hasLaunchedOnce {
                 // 以前にアプリを起動したことがある場合、直接MainTabViewを表示
-                MainTabView() // MainTabViewが未定義なので、実際のプロジェクトに合わせたビューに置き換えてください
+                MainTabView() // MainTabViewへの遷移
             } else {
                 // 初回起動時はContentViewからスタート
-                ContentView()
+                ContentView() // 初期ビューまたはウェルカムビュー
             }
         }
     }
@@ -34,7 +43,8 @@ struct TripApp: App {
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        GMSServices.provideAPIKey("AIzaSyC0Qu88Rl9ZctOJU1w3hEJ9uLGmi6JDK8Q")
+        // Google MapsのAPIキーを提供
+        GMSServices.provideAPIKey("AIzaSyC0Qu88Rl9ZctOJU1w5hJ9uLGmi6JDK8Q")
         
         // Firebaseを初期化
         FirebaseApp.configure()
@@ -43,6 +53,7 @@ class AppDelegate: NSObject, UIApplicationDelegate {
     }
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        // GoogleSignInの処理
         return GIDSignIn.sharedInstance.handle(url)
     }
 }

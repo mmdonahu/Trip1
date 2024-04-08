@@ -8,10 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		1B01CB59FD490FF50FF08B46 /* Pods_Trip.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 74733B397EB7C51F38B13779 /* Pods_Trip.framework */; };
+		9919B32F2BBA331B00D057E6 /* UserInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9919B32E2BBA331B00D057E6 /* UserInformationView.swift */; };
 		992BB8712BA3D91400825A55 /* Sky.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 992BB8702BA3D91400825A55 /* Sky.mp4 */; };
 		994E878D2BABC7F700956C69 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 994E878C2BABC7F700956C69 /* GoogleService-Info.plist */; };
 		994E878F2BABCA2200956C69 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994E878E2BABCA2200956C69 /* SignupView.swift */; };
 		9962A1C22BA41AF40011B320 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9962A1C12BA41AF40011B320 /* LocationManager.swift */; };
+		99B49CAB2BBE49CD00E8326B /* HunterRankLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B49CAA2BBE49CD00E8326B /* HunterRankLogic.swift */; };
+		99B49CAD2BBE4B4800E8326B /* MomentPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B49CAC2BBE4B4800E8326B /* MomentPostView.swift */; };
+		99B49CAF2BBE4C2200E8326B /* MomentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B49CAE2BBE4C2200E8326B /* MomentManager.swift */; };
 		99E196E12BA3D2C7009CE1E4 /* TripApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E196E02BA3D2C7009CE1E4 /* TripApp.swift */; };
 		99E196E32BA3D2C7009CE1E4 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E196E22BA3D2C7009CE1E4 /* TestView.swift */; };
 		99E196E52BA3D2C8009CE1E4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99E196E42BA3D2C8009CE1E4 /* Assets.xcassets */; };
@@ -30,10 +34,15 @@
 		0FB951EEDB2D4655533F17B6 /* Pods-Trip.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trip.release.xcconfig"; path = "Target Support Files/Pods-Trip/Pods-Trip.release.xcconfig"; sourceTree = "<group>"; };
 		46FB16F6ED6A968D7BEFB98D /* Pods-Trip.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Trip.debug.xcconfig"; path = "Target Support Files/Pods-Trip/Pods-Trip.debug.xcconfig"; sourceTree = "<group>"; };
 		74733B397EB7C51F38B13779 /* Pods_Trip.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Trip.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9919B32E2BBA331B00D057E6 /* UserInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInformationView.swift; sourceTree = "<group>"; };
+		991F12552BBFA11C00D32A26 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		992BB8702BA3D91400825A55 /* Sky.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Sky.mp4; sourceTree = "<group>"; };
 		994E878C2BABC7F700956C69 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		994E878E2BABCA2200956C69 /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
 		9962A1C12BA41AF40011B320 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		99B49CAA2BBE49CD00E8326B /* HunterRankLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HunterRankLogic.swift; sourceTree = "<group>"; };
+		99B49CAC2BBE4B4800E8326B /* MomentPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentPostView.swift; sourceTree = "<group>"; };
+		99B49CAE2BBE4C2200E8326B /* MomentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentManager.swift; sourceTree = "<group>"; };
 		99E196DD2BA3D2C7009CE1E4 /* Trip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		99E196E02BA3D2C7009CE1E4 /* TripApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripApp.swift; sourceTree = "<group>"; };
 		99E196E22BA3D2C7009CE1E4 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
@@ -99,6 +108,7 @@
 		99E196DF2BA3D2C7009CE1E4 /* Trip */ = {
 			isa = PBXGroup;
 			children = (
+				991F12552BBFA11C00D32A26 /* Info.plist */,
 				99E196E02BA3D2C7009CE1E4 /* TripApp.swift */,
 				99E196F22BA3D49A009CE1E4 /* ContentView.swift */,
 				994E878E2BABCA2200956C69 /* SignupView.swift */,
@@ -109,11 +119,15 @@
 				99E196FA2BA3D523009CE1E4 /* SnsShareView.swift */,
 				99E196F42BA3D4AB009CE1E4 /* MomentView.swift */,
 				99E196F82BA3D4E3009CE1E4 /* RuleDescriptionView.swift */,
-				9962A1C12BA41AF40011B320 /* LocationManager.swift */,
 				994E878C2BABC7F700956C69 /* GoogleService-Info.plist */,
-				99E196E22BA3D2C7009CE1E4 /* TestView.swift */,
+				9919B32E2BBA331B00D057E6 /* UserInformationView.swift */,
+				99B49CAC2BBE4B4800E8326B /* MomentPostView.swift */,
 				992BB8702BA3D91400825A55 /* Sky.mp4 */,
+				99B49CAA2BBE49CD00E8326B /* HunterRankLogic.swift */,
+				9962A1C12BA41AF40011B320 /* LocationManager.swift */,
+				99B49CAE2BBE4C2200E8326B /* MomentManager.swift */,
 				99E196E42BA3D2C8009CE1E4 /* Assets.xcassets */,
+				99E196E22BA3D2C7009CE1E4 /* TestView.swift */,
 				99E196E62BA3D2C8009CE1E4 /* Preview Content */,
 			);
 			path = Trip;
@@ -263,12 +277,16 @@
 			files = (
 				994E878F2BABCA2200956C69 /* SignupView.swift in Sources */,
 				99E196FD2BA3D539009CE1E4 /* MainTabView.swift in Sources */,
+				99B49CAB2BBE49CD00E8326B /* HunterRankLogic.swift in Sources */,
 				99E196EF2BA3D455009CE1E4 /* DestinationMapView.swift in Sources */,
 				99E196F32BA3D49A009CE1E4 /* ContentView.swift in Sources */,
 				9962A1C22BA41AF40011B320 /* LocationManager.swift in Sources */,
 				99E196F12BA3D478009CE1E4 /* HomeView.swift in Sources */,
+				99B49CAD2BBE4B4800E8326B /* MomentPostView.swift in Sources */,
 				99E196F92BA3D4E3009CE1E4 /* RuleDescriptionView.swift in Sources */,
+				99B49CAF2BBE4C2200E8326B /* MomentManager.swift in Sources */,
 				99E196E32BA3D2C7009CE1E4 /* TestView.swift in Sources */,
+				9919B32F2BBA331B00D057E6 /* UserInformationView.swift in Sources */,
 				99E196FB2BA3D523009CE1E4 /* SnsShareView.swift in Sources */,
 				99E196F52BA3D4AB009CE1E4 /* MomentView.swift in Sources */,
 				99E196F72BA3D4C2009CE1E4 /* PermissionLocationView.swift in Sources */,
@@ -409,6 +427,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Trip/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Trip/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -438,6 +457,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Trip/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Trip/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

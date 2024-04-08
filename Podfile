@@ -8,7 +8,10 @@ target 'Trip' do
   # Pods for YourProjectName
   pod 'GoogleMaps'
   pod 'GooglePlaces'
+  pod 'GoogleSignIn'
   pod 'Firebase/Auth'
   pod 'Firebase/Analytics'
-  pod 'GoogleSignIn'
+  pod 'Firebase/Firestore'
+  pod 'Firebase/Storage'
+  
 end

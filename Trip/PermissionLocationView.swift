@@ -1,20 +1,34 @@
-//
-//  Register Membership.swift
-//  Trip Collector
-//
-//  Created by 香川隼也 on 2024/03/05.
-//
-
 import SwiftUI
 import CoreLocation
 
+// ObservableObjectプロトコルに準拠したLocationManagerクラス
+class LocationManager: NSObject, CLLocationManagerDelegate, ObservableObject {
+    @Published var locationPermissionGranted = false // 位置情報の許可状態
+    private let manager: CLLocationManager
+    
+    override init() {
+        manager = CLLocationManager()
+        super.init()
+        manager.delegate = self
+    }
+    
+    func requestLocationPermission() {
+        manager.requestWhenInUseAuthorization()
+    }
+    
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        // 位置情報の許可状態を更新する必要がある場合は、ここで処理しますが、
+        // 次の画面に遷移する条件は変更しないため、このメソッドの中身は現時点では変更不要です。
+    }
+}
+
 struct PermissionLocationView: View {
-    @State private var locationPermissionGranted = false
-    // CLLocationManagerのインスタンスはここで保持する
-    private let locationManager = CLLocationManager()
+    @ObservedObject private var locationManager = LocationManager()
+    @State private var showRuleDescriptionView = false // 遷移制御用の状態変数
     
     var body: some View {
         VStack {
+            // UIコンポーネントの配置...
             Spacer()
             Image(systemName: "location.circle.fill")
                 .resizable()
@@ -24,13 +38,13 @@ struct PermissionLocationView: View {
             Text("Allow us to use your location")
                 .font(.title)
                 .padding()
-            Text("Please allow us to use your location to better serve you")
+            Text("Location services must be enabled. Without your location, our journey together cannot begin")
                 .multilineTextAlignment(.center)
                 .padding()
             
             Button(action: {
-                // 位置情報の許可を求める処理
-                requestLocationPermission()
+                self.locationManager.requestLocationPermission()
+                self.showRuleDescriptionView = true // ここで直接次の画面に遷移するフラグをtrueにする
             }) {
                 Text("Allow the use of location information")
                     .foregroundColor(.white)
@@ -40,46 +54,15 @@ struct PermissionLocationView: View {
             }
             Spacer()
         }
-        .onChange(of: locationPermissionGranted) { newValue in
-            if newValue {
-                // 位置情報が許可されたらRuleDescriptionViewへ遷移
-                // この部分はあなたのアプリのナビゲーションフローに合わせて調整してください
-                showRuleDescriptionView()
-            }
+        .fullScreenCover(isPresented: $showRuleDescriptionView) {
+            RuleDescriptionView() // ここで既存のRuleDescriptionViewへ遷移
         }
-        .onAppear {
-            // ビューが表示されたときに位置情報の許可状態を確認
-            checkLocationAuthorizationStatus()
-        }
-    }
-    
-    private func requestLocationPermission() {
-        locationManager.requestWhenInUseAuthorization()
-        checkLocationAuthorizationStatus()
-    }
-    
-    private func checkLocationAuthorizationStatus() {
-        switch CLLocationManager.authorizationStatus() {
-        case .authorizedWhenInUse, .authorizedAlways:
-            // 位置情報の使用が許可されている場合
-            locationPermissionGranted = true
-        default:
-            // その他の場合、許可されていない
-            locationPermissionGranted = false
-        }
-    }
-    
-    private func showRuleDescriptionView() {
-        // RuleDescriptionViewへの遷移処理をここに記述
-        // 例: NavigationLinkのisActiveをtrueにする、画面遷移のためのカスタムメソッド呼び出し等
     }
 }
 
-// Preview
 struct PermissionLocationView_Previews: PreviewProvider {
     static var previews: some View {
         PermissionLocationView()
     }
 }
-
 
