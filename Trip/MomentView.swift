@@ -1,43 +1,69 @@
 import SwiftUI
 
 struct MomentView: View {
-    // サンプルの投稿データを模擬的に作成
-    let moments = [
-        Moment(userName: "佐藤 太郎", timeAgo: "32分", postImage: "river", likes: 3, postText: "テスト"),
-        Moment(userName: "さら 大原", timeAgo: "22分", postImage: "selfie", likes: 1, postText: "今日大阪で17:00-21:00くらいまで空いてる方いませんか😳"),
-        Moment(userName: "てくん", timeAgo: "42分", postImage: "food", likes: 3, postText: "ランチ最高")
-    ]
+    @ObservedObject var momentManager = MomentManager.shared
+    @State private var showingMomentPostView = false // ここに追加します
     
     var body: some View {
-        List(moments) { moment in
+        List(momentManager.posts) { postTime in
             VStack(alignment: .leading) {
                 HStack {
-                    Image(systemName: "person.circle.fill")
+                    
+                    Spacer()
+                    
+                    Text("Moments")
+                        .font(.headline)
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                    Spacer()
+                    
+                    Button(action: {
+                        showingMomentPostView = true
+                    }) {
+                        Image(systemName: "plus")
+                    }
+                }
+                
+                Spacer()
+            }
+            .sheet(isPresented: $showingMomentPostView) {
+                MomentPostView() // 実際のMomentPostViewに置き換え
+            }
+            
+                HStack {
+                    Image(systemName: "person.circle.fill") // 本来はユーザーのプロフィール画像を表示する
                         .resizable()
                         .frame(width: 50, height: 50)
                         .clipShape(Circle())
                         .overlay(Circle().stroke(Color.gray, lineWidth: 2))
                     
                     VStack(alignment: .leading) {
-                        Text(moment.userName)
+                        Text(postTime.userName)
                             .font(.headline)
-                        Text("\(moment.timeAgo)前")
+                        // 実際のタイムスタンプから相対的な時間を計算する必要があります
+                        Text(postTime.timestamp, formatter: RelativeDateTimeFormatter())
                             .font(.subheadline)
                     }
                 }
                 
-                Text(moment.postText)
+                Text(postTime.postText)
                     .padding(.vertical, 5)
                 
-                Image(moment.postImage)
-                    .resizable()
+                // 実際の画像をFirebase StorageのURLから取得して表示する
+                // この部分はダミーの画像で置き換えられるべきです
+                FirebaseImageView(imageUrl: postTime.postImageUrl)
                     .scaledToFit()
                 
                 HStack {
-                    Button(action: {}) {
+                    Button(action: {
+                        // いいね機能を実装
+                        momentManager.updateLikes(postId: postTime.id, newLikes: postTime.likes + 1)
+                    }) {
                         Image(systemName: "heart")
                     }
-                    Text("\(moment.likes)")
+                    Text("\(postTime.likes)")
                     Spacer()
                     // その他のアクションボタンや表示はここに配置
                 }
@@ -45,21 +71,33 @@ struct MomentView: View {
             }
         }
     }
-}
-
-struct Moment: Identifiable {
-    let id = UUID()
-    let userName: String
-    let timeAgo: String
-    let postImage: String
-    let likes: Int
-    let postText: String
-}
-
-// Preview
-struct MomentView_Previews: PreviewProvider {
-    static var previews: some View {
-        MomentView()
+    struct postTime: Identifiable {
+        var id: String
+        var userId: String
+        var userName: String
+        var postText: String
+        var postImageUrl: String
+        var timestamp: Date
+        var likes: Int
     }
-}
+    
+    // Preview
+    struct MomentView_Previews: PreviewProvider {
+        static var previews: some View {
+            MomentView()
+        }
+    }
+    
+    // 仮のFirebaseImageView実装
+    struct FirebaseImageView: View {
+        let imageUrl: String
+        
+        var body: some View {
+            // ここで実際のFirebase Storageの画像をダウンロードして表示するコンポーネントが必要
+            Image(systemName: "photo") // 仮のプレースホルダー
+                .resizable()
+                .frame(width: 200, height: 200)
+                .aspectRatio(contentMode: .fit)
+        }
+    }
 

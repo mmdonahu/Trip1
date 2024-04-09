@@ -75,6 +75,7 @@ struct SignupView: View {
                     .cornerRadius(10)
             }
         }
+        .navigationBarHidden(true) // ナビゲーションバーを非表示に
         .padding(.top, -50)
         .fullScreenCover(isPresented: $showPermissionLocationView) {
             PermissionLocationView() // 遷移先のビューを指定
