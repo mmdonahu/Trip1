@@ -1,103 +1,107 @@
 import SwiftUI
+import Firebase
+import FirebaseStorage
 
 struct MomentView: View {
     @ObservedObject var momentManager = MomentManager.shared
-    @State private var showingMomentPostView = false // ここに追加します
+    @State private var showingMomentPostView = false
     
     var body: some View {
-        List(momentManager.posts) { postTime in
+        List(momentManager.posts) { post in
             VStack(alignment: .leading) {
                 HStack {
-                    
                     Spacer()
-                    
-                    Text("Moments")
-                        .font(.headline)
+                    Text("Moment")
                         .padding()
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .cornerRadius(10)
                     Spacer()
-                    
                     Button(action: {
                         showingMomentPostView = true
                     }) {
                         Image(systemName: "plus")
                     }
                 }
-                
                 Spacer()
             }
             .sheet(isPresented: $showingMomentPostView) {
-                MomentPostView() // 実際のMomentPostViewに置き換え
+                MomentPostView() // この行のコメントアウトを解除
             }
             
-                HStack {
-                    Image(systemName: "person.circle.fill") // 本来はユーザーのプロフィール画像を表示する
-                        .resizable()
-                        .frame(width: 50, height: 50)
-                        .clipShape(Circle())
-                        .overlay(Circle().stroke(Color.gray, lineWidth: 2))
-                    
-                    VStack(alignment: .leading) {
-                        Text(postTime.userName)
-                            .font(.headline)
-                        // 実際のタイムスタンプから相対的な時間を計算する必要があります
-                        Text(postTime.timestamp, formatter: RelativeDateTimeFormatter())
-                            .font(.subheadline)
-                    }
+            
+            HStack {
+                Image(systemName: "person.circle.fill")
+                    .resizable()
+                    .frame(width: 50, height: 50)
+                    .clipShape(Circle())
+                    .overlay(Circle().stroke(Color.gray, lineWidth: 2))
+                
+                VStack(alignment: .leading) {
+                    Text(post.userName)
+                        .font(.headline)
+                    Text(post.timestamp, formatter: RelativeDateTimeFormatter())
+                        .font(.subheadline)
                 }
-                
-                Text(postTime.postText)
-                    .padding(.vertical, 5)
-                
-                // 実際の画像をFirebase StorageのURLから取得して表示する
-                // この部分はダミーの画像で置き換えられるべきです
-                FirebaseImageView(imageUrl: postTime.postImageUrl)
-                    .scaledToFit()
-                
-                HStack {
-                    Button(action: {
-                        // いいね機能を実装
-                        momentManager.updateLikes(postId: postTime.id, newLikes: postTime.likes + 1)
-                    }) {
-                        Image(systemName: "heart")
-                    }
-                    Text("\(postTime.likes)")
-                    Spacer()
-                    // その他のアクションボタンや表示はここに配置
-                }
+            }
+            
+            Text(post.postText)
                 .padding(.vertical, 5)
+            
+            FirebaseImageView(imageUrl: post.postImageUrl)
+                .scaledToFit()
+            
+            HStack {
+                Button(action: {
+                    MomentManager.shared.likePost(postId: post.id)
+                }) {
+                    Image(systemName: "heart")
+                }
+                Text("\(post.likedBy.count)")
+                Spacer()
+            }
+            .padding(.vertical, 5)
+        }
+    }
+}
+    // FirebaseImageViewの機能をここに組み込む
+    struct FirebaseImageView: View {
+        let imageUrl: String
+        @State private var downloadedImage: UIImage?
+        
+        var body: some View {
+            Group {
+                if let downloadedImage = downloadedImage {
+                    Image(uiImage: downloadedImage)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                } else {
+                    Image(systemName: "photo")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                }
+            }
+            .frame(width: 200, height: 200)
+            .onAppear {
+                downloadImage()
+            }
+        }
+        
+        private func downloadImage() {
+            let storageRef = Storage.storage().reference(withPath: imageUrl)
+            storageRef.getData(maxSize:Int64(1 * 1024 * 1024)) { data, error in
+                if let error = error {
+                    print("Error downloading image: \(error)")
+                    return
+                }
+                if let data = data, let image = UIImage(data: data) {
+                    self.downloadedImage = image
+                }
             }
         }
     }
-    struct postTime: Identifiable {
-        var id: String
-        var userId: String
-        var userName: String
-        var postText: String
-        var postImageUrl: String
-        var timestamp: Date
-        var likes: Int
+
+
+struct MomentView_Previews: PreviewProvider {
+    static var previews: some View {
+        MomentView()
     }
-    
-    // Preview
-    struct MomentView_Previews: PreviewProvider {
-        static var previews: some View {
-            MomentView()
-        }
-    }
-    
-    // 仮のFirebaseImageView実装
-    struct FirebaseImageView: View {
-        let imageUrl: String
-        
-        var body: some View {
-            // ここで実際のFirebase Storageの画像をダウンロードして表示するコンポーネントが必要
-            Image(systemName: "photo") // 仮のプレースホルダー
-                .resizable()
-                .frame(width: 200, height: 200)
-                .aspectRatio(contentMode: .fit)
-        }
-    }
+}
 
