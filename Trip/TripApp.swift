@@ -9,6 +9,7 @@ import SwiftUI
 import GoogleMaps
 import Firebase
 import GoogleSignIn
+import UserNotifications
 
 @main
 struct TripApp: App {
@@ -21,21 +22,16 @@ struct TripApp: App {
     
     var body: some Scene {
         WindowGroup {
-            // 環境変数に基づいて特定のビューを直接表示するかを決定
             if let debugView = ProcessInfo.processInfo.environment["DEBUG_VIEW"], !debugView.isEmpty {
-                // 'PermissionLocationView'が指定された場合、そのビューを直接表示
-                if debugView == "MainTabView" {
-                    MainTabView()
+                if debugView == "ContentView" {
+                    ContentView().environmentObject(CheckpointManager.shared)
                 } else {
-                    // 指定されたビューが見つからない場合のフォールバック
-                    ContentView() // 初期ビューまたはデフォルトビュー
+                    ContentView().environmentObject(CheckpointManager.shared) // 初期ビューまたはデフォルトビュー
                 }
             } else if hasLaunchedOnce {
-                // 以前にアプリを起動したことがある場合、直接MainTabViewを表示
-                MainTabView() // MainTabViewへの遷移
+                MainTabView().environmentObject(CheckpointManager.shared) // MainTabViewへの遷移
             } else {
-                // 初回起動時はContentViewからスタート
-                ContentView() // 初期ビューまたはウェルカムビュー
+                ContentView().environmentObject(CheckpointManager.shared) // 初期ビューまたはウェルカムビュー
             }
         }
     }
@@ -48,6 +44,16 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         
         // Firebaseを初期化
         FirebaseApp.configure()
+        
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { granted, error in
+            if granted {
+                print("Notificatuon permission granted")
+            } else {
+                print("Notification permission denied")
+            }
+        }
+        // GeofenceManagerのシングルトンインスタンスを初期化
+        _ = GeofenceManager.shared
         
         return true
     }

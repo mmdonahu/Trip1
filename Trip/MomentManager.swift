@@ -88,21 +88,40 @@ class MomentManager: ObservableObject {
             
             var likedBy = postDocument.data()?["likedBy"] as? [String] ?? []
             if likedBy.contains(userId) {
-                // すでに「いいね」している場合、リストからユーザーIDを削除
                 likedBy.removeAll { $0 == userId }
             } else {
-                // 「いいね」していない場合は、ユーザーIDを追加
                 likedBy.append(userId)
             }
-            transaction.updateData(["likedBy": likedBy], forDocument: postRef)
+            
+            let newLikes = likedBy.count
+            transaction.updateData(["likedBy": likedBy, "likes": newLikes], forDocument: postRef)
             
             return nil
-        }) { _, error in
+        }) { [weak self] _, error in
             if let error = error {
                 print("Error liking/unliking post: \(error.localizedDescription)")
+            } else {
+                // 成功した場合、再度ドキュメントを取得してUIを更新
+                postRef.getDocument { (document, error) in
+                    guard let document = document, document.exists, let data = document.data() else {
+                        print("Document does not exist")
+                        return
+                    }
+                    let updatedLikes = data["likes"] as? Int ?? 0
+                    let updatedLikedBy = data["likedBy"] as? [String] ?? []
+                    
+                    DispatchQueue.main.async {
+                        if let index = self?.posts.firstIndex(where: { $0.id == postId }) {
+                            self?.posts[index].likes = updatedLikes
+                            self?.posts[index].likedBy = updatedLikedBy
+                        }
+                    }
+                }
             }
         }
     }
+    
+    
     
     func loadUserProfile(completion: @escaping (_ displayName: String?, _ profileImageUrl: String?) -> Void) {
         guard let userId = Auth.auth().currentUser?.uid else {
@@ -122,7 +141,7 @@ class MomentManager: ObservableObject {
             }
         }
     }
-
+    
 }
 
 struct PostData: Identifiable {
@@ -135,4 +154,3 @@ struct PostData: Identifiable {
     var likes: Int
     var likedBy: [String] = [] // 「いいね」したユーザーIDのリスト
 }
-

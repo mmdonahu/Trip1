@@ -13,9 +13,12 @@
 		994E878D2BABC7F700956C69 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 994E878C2BABC7F700956C69 /* GoogleService-Info.plist */; };
 		994E878F2BABCA2200956C69 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994E878E2BABCA2200956C69 /* SignupView.swift */; };
 		9962A1C22BA41AF40011B320 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9962A1C12BA41AF40011B320 /* LocationManager.swift */; };
-		99B49CAB2BBE49CD00E8326B /* HunterRankLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B49CAA2BBE49CD00E8326B /* HunterRankLogic.swift */; };
 		99B49CAD2BBE4B4800E8326B /* MomentPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B49CAC2BBE4B4800E8326B /* MomentPostView.swift */; };
 		99B49CAF2BBE4C2200E8326B /* MomentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B49CAE2BBE4C2200E8326B /* MomentManager.swift */; };
+		99DF5F912BD24E650013F66A /* EditiCardsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DF5F902BD24E650013F66A /* EditiCardsManager.swift */; };
+		99DF5F932BD24EAE0013F66A /* CongratulationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DF5F922BD24EAE0013F66A /* CongratulationsView.swift */; };
+		99DF5F952BD2508F0013F66A /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DF5F942BD2508F0013F66A /* NotificationManager.swift */; };
+		99DF5F972BD251B20013F66A /* VerifyLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DF5F962BD251B20013F66A /* VerifyLocationManager.swift */; };
 		99E196E12BA3D2C7009CE1E4 /* TripApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E196E02BA3D2C7009CE1E4 /* TripApp.swift */; };
 		99E196E32BA3D2C7009CE1E4 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E196E22BA3D2C7009CE1E4 /* TestView.swift */; };
 		99E196E52BA3D2C8009CE1E4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 99E196E42BA3D2C8009CE1E4 /* Assets.xcassets */; };
@@ -26,7 +29,6 @@
 		99E196F52BA3D4AB009CE1E4 /* MomentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E196F42BA3D4AB009CE1E4 /* MomentView.swift */; };
 		99E196F72BA3D4C2009CE1E4 /* PermissionLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E196F62BA3D4C2009CE1E4 /* PermissionLocationView.swift */; };
 		99E196F92BA3D4E3009CE1E4 /* RuleDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E196F82BA3D4E3009CE1E4 /* RuleDescriptionView.swift */; };
-		99E196FB2BA3D523009CE1E4 /* SnsShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E196FA2BA3D523009CE1E4 /* SnsShareView.swift */; };
 		99E196FD2BA3D539009CE1E4 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E196FC2BA3D539009CE1E4 /* MainTabView.swift */; };
 /* End PBXBuildFile section */
 
@@ -40,9 +42,12 @@
 		994E878C2BABC7F700956C69 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		994E878E2BABCA2200956C69 /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
 		9962A1C12BA41AF40011B320 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
-		99B49CAA2BBE49CD00E8326B /* HunterRankLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HunterRankLogic.swift; sourceTree = "<group>"; };
 		99B49CAC2BBE4B4800E8326B /* MomentPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentPostView.swift; sourceTree = "<group>"; };
 		99B49CAE2BBE4C2200E8326B /* MomentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentManager.swift; sourceTree = "<group>"; };
+		99DF5F902BD24E650013F66A /* EditiCardsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditiCardsManager.swift; sourceTree = "<group>"; };
+		99DF5F922BD24EAE0013F66A /* CongratulationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongratulationsView.swift; sourceTree = "<group>"; };
+		99DF5F942BD2508F0013F66A /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		99DF5F962BD251B20013F66A /* VerifyLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyLocationManager.swift; sourceTree = "<group>"; };
 		99E196DD2BA3D2C7009CE1E4 /* Trip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Trip.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		99E196E02BA3D2C7009CE1E4 /* TripApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripApp.swift; sourceTree = "<group>"; };
 		99E196E22BA3D2C7009CE1E4 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
@@ -54,7 +59,6 @@
 		99E196F42BA3D4AB009CE1E4 /* MomentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentView.swift; sourceTree = "<group>"; };
 		99E196F62BA3D4C2009CE1E4 /* PermissionLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionLocationView.swift; sourceTree = "<group>"; };
 		99E196F82BA3D4E3009CE1E4 /* RuleDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuleDescriptionView.swift; sourceTree = "<group>"; };
-		99E196FA2BA3D523009CE1E4 /* SnsShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SnsShareView.swift; sourceTree = "<group>"; };
 		99E196FC2BA3D539009CE1E4 /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -116,16 +120,18 @@
 				99E196FC2BA3D539009CE1E4 /* MainTabView.swift */,
 				99E196F02BA3D478009CE1E4 /* HomeView.swift */,
 				99E196EE2BA3D455009CE1E4 /* DestinationMapView.swift */,
-				99E196FA2BA3D523009CE1E4 /* SnsShareView.swift */,
 				99E196F42BA3D4AB009CE1E4 /* MomentView.swift */,
 				99E196F82BA3D4E3009CE1E4 /* RuleDescriptionView.swift */,
 				994E878C2BABC7F700956C69 /* GoogleService-Info.plist */,
 				9919B32E2BBA331B00D057E6 /* UserInformationView.swift */,
+				99DF5F922BD24EAE0013F66A /* CongratulationsView.swift */,
 				99B49CAC2BBE4B4800E8326B /* MomentPostView.swift */,
 				992BB8702BA3D91400825A55 /* Sky.mp4 */,
-				99B49CAA2BBE49CD00E8326B /* HunterRankLogic.swift */,
 				9962A1C12BA41AF40011B320 /* LocationManager.swift */,
 				99B49CAE2BBE4C2200E8326B /* MomentManager.swift */,
+				99DF5F942BD2508F0013F66A /* NotificationManager.swift */,
+				99DF5F962BD251B20013F66A /* VerifyLocationManager.swift */,
+				99DF5F902BD24E650013F66A /* EditiCardsManager.swift */,
 				99E196E42BA3D2C8009CE1E4 /* Assets.xcassets */,
 				99E196E22BA3D2C7009CE1E4 /* TestView.swift */,
 				99E196E62BA3D2C8009CE1E4 /* Preview Content */,
@@ -276,18 +282,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				994E878F2BABCA2200956C69 /* SignupView.swift in Sources */,
+				99DF5F952BD2508F0013F66A /* NotificationManager.swift in Sources */,
 				99E196FD2BA3D539009CE1E4 /* MainTabView.swift in Sources */,
-				99B49CAB2BBE49CD00E8326B /* HunterRankLogic.swift in Sources */,
 				99E196EF2BA3D455009CE1E4 /* DestinationMapView.swift in Sources */,
 				99E196F32BA3D49A009CE1E4 /* ContentView.swift in Sources */,
 				9962A1C22BA41AF40011B320 /* LocationManager.swift in Sources */,
 				99E196F12BA3D478009CE1E4 /* HomeView.swift in Sources */,
 				99B49CAD2BBE4B4800E8326B /* MomentPostView.swift in Sources */,
 				99E196F92BA3D4E3009CE1E4 /* RuleDescriptionView.swift in Sources */,
+				99DF5F912BD24E650013F66A /* EditiCardsManager.swift in Sources */,
 				99B49CAF2BBE4C2200E8326B /* MomentManager.swift in Sources */,
+				99DF5F972BD251B20013F66A /* VerifyLocationManager.swift in Sources */,
 				99E196E32BA3D2C7009CE1E4 /* TestView.swift in Sources */,
 				9919B32F2BBA331B00D057E6 /* UserInformationView.swift in Sources */,
-				99E196FB2BA3D523009CE1E4 /* SnsShareView.swift in Sources */,
+				99DF5F932BD24EAE0013F66A /* CongratulationsView.swift in Sources */,
 				99E196F52BA3D4AB009CE1E4 /* MomentView.swift in Sources */,
 				99E196F72BA3D4C2009CE1E4 /* PermissionLocationView.swift in Sources */,
 				99E196E12BA3D2C7009CE1E4 /* TripApp.swift in Sources */,

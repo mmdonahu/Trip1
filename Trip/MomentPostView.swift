@@ -125,7 +125,7 @@ struct MomentPostView: View {
     }
     
     func postToFirebase() {
-        guard let currentUser = Auth.auth().currentUser, let inputImage = inputImage else {
+        guard let currentUser = Auth.auth().currentUser, let inputImage = self.inputImage else {
             self.postError = "Authentication failed or no image selected."
             return
         }
@@ -135,50 +135,65 @@ struct MomentPostView: View {
             return
         }
         
-        isPosting = true
+        self.isPosting = true
         
-        // 1. 画像をDataに変換
-        guard let imageData = inputImage.jpegData(compressionQuality: 0.75) else {
-            self.postError = "Image conversion failed."
-            self.isPosting = false
-            return
-        }
+        // Firestoreのインスタンスを取得
+        let db = Firestore.firestore()
         
-        // 2. Firebase Storageに画像をアップロード
-        let imageRef = Storage.storage().reference().child("postImages/\(UUID().uuidString).jpg")
-        imageRef.putData(imageData, metadata: nil) { (metadata, error) in
-            guard error == nil else {
-                self.postError = "Image upload failed: \(error!.localizedDescription)"
+        // `users`コレクションからユーザーのドキュメントを取得
+        db.collection("users").document(currentUser.uid).getDocument { (document, error) in
+            guard let document = document, document.exists, let data = document.data() else {
+                print("Document does not exist or failed to fetch user data")
                 self.isPosting = false
                 return
             }
             
-            // 3. アップロードされた画像のURLを取得
-            imageRef.downloadURL { (url, error) in
-                guard let downloadURL = url else {
-                    self.postError = "Fetch image URL failed: \(error!.localizedDescription)"
+            let userName = data["name"] as? String ?? "Unknown User"
+            let profileImageUrl = data["profileImageUrl"] as? String ?? ""
+            
+            // 画像をDataに変換し、Firebase Storageにアップロードする処理
+            guard let imageData = inputImage.jpegData(compressionQuality: 0.75) else {
+                self.postError = "Image conversion failed."
+                self.isPosting = false
+                return
+            }
+            
+            let imageRef = Storage.storage().reference().child("postImages/\(UUID().uuidString).jpg")
+            imageRef.putData(imageData, metadata: nil) { (metadata, error) in
+                guard error == nil else {
+                    self.postError = "Image upload failed: \(error!.localizedDescription)"
                     self.isPosting = false
                     return
                 }
                 
-                // 4. Firestoreに投稿データを保存
-                let db = Firestore.firestore()
-                db.collection("moments").addDocument(data: [
-                    "userId": currentUser.uid,
-                    "postText": self.postText,
-                    "postimageUrl": downloadURL.absoluteString,
-                    "timestamp": FieldValue.serverTimestamp()
-                ]) { error in
-                    if let error = error {
-                        self.postError = "Firestore save failed: \(error.localizedDescription)"
-                    } else {
-                        // 投稿成功
-                        self.postError = nil
-                        self.postText = "" // テキストフィールドをクリア
-                        self.postImage = nil // 投稿イメージをクリア
+                // アップロードされた画像のURLを取得
+                imageRef.downloadURL { (url, error) in
+                    guard let downloadURL = url else {
+                        self.postError = "Fetch image URL failed: \(error!.localizedDescription)"
+                        self.isPosting = false
+                        return
                     }
-                    self.isPosting = false
-                    self.presentationMode.wrappedValue.dismiss() // ここで画面を閉じる
+                    
+                    // Firestoreに投稿データを保存
+                    db.collection("moments").addDocument(data: [
+                        "userId": currentUser.uid,
+                        "userName": userName,
+                        "profileImageUrl": profileImageUrl,
+                        "postText": self.postText,
+                        "postimageUrl": downloadURL.absoluteString,
+                        "timestamp": FieldValue.serverTimestamp()
+                    ]) { error in
+                        if let error = error {
+                            self.postError = "Firestore save failed: \(error.localizedDescription)"
+                        } else {
+                            // 投稿成功
+                            self.postError = nil
+                            self.postText = "" // テキストフィールドをクリア
+                            self.postImage = nil // 投稿イメージをクリア
+                        }
+                        self.isPosting = false
+                        self.presentationMode.wrappedValue.dismiss() // ここで画面を閉じる
+                    }
                 }
             }
         }
@@ -229,4 +244,3 @@ struct MomentPostView_Previews: PreviewProvider {
         MomentPostView()
     }
 }
-
