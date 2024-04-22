@@ -58,7 +58,7 @@
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "DEBUG_VIEW"
-            value = "ContentView"
+            value = "MainTabView"
             isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>

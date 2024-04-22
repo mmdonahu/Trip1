@@ -23,8 +23,8 @@ struct TripApp: App {
     var body: some Scene {
         WindowGroup {
             if let debugView = ProcessInfo.processInfo.environment["DEBUG_VIEW"], !debugView.isEmpty {
-                if debugView == "ContentView" {
-                    ContentView().environmentObject(CheckpointManager.shared)
+                if debugView == "MainTabView" {
+                    MainTabView().environmentObject(CheckpointManager.shared)
                 } else {
                     ContentView().environmentObject(CheckpointManager.shared) // 初期ビューまたはデフォルトビュー
                 }
