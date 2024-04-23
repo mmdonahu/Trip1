@@ -2,6 +2,9 @@ import UIKit
 import CoreLocation
 import Foundation
 import Combine
+import Firebase
+import FirebaseFirestore
+import FirebaseAuth
 
 class GeofenceManager: NSObject, CLLocationManagerDelegate {
     static let shared = GeofenceManager()
@@ -46,16 +49,48 @@ class GeofenceManager: NSObject, CLLocationManagerDelegate {
         let checkpointIdString = region.identifier.components(separatedBy: ".").first ?? ""
         let checkpointId = Int(checkpointIdString) ?? 0 // 数値変換できない場合は0を代入
         
-        // チェックポイントの名前とIDを使用して通知をスケジュール
-        NotificationManager.shared.scheduleNotification(for: region.identifier, checkpointId: checkpointId)
-        CheckpointManager.shared.notificationReceived = true
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
-        print("\(region.identifier)のジオフェンス領域から出ました")
+        // UserDefaultsを確認して既にチェックインしているかを判断
+        if UserDefaults.standard.bool(forKey: "checked_in_\(checkpointId)") == false {
+            // まだチェックインしていない場合はFirebaseにデータを送信
+            guard let userId = Auth.auth().currentUser?.uid else {
+                print("ユーザーIDが取得できません。")
+                return
+            }
+            // Firebaseからユーザー名を取得する
+            let userDocRef = Firestore.firestore().collection("users").document(userId)
+            userDocRef.getDocument { (document, error) in
+                if let document = document, document.exists, let userName = document.data()?["name"] as? String {
+                    
+            // Firebaseにデータを送信
+            VerifyCheckpontManager.shared.sendCheckpointData(checkpointId: checkpointId, checkpointName: region.identifier, userId: userId)
+                    
+                    // EditCardsManagerを使用して画像のダウンロードと編集を行う
+                    EditCardsManager.shared.downloadEditAndSaveImage(checkpointId: checkpointIdString, username: userName) { editedImage in
+                        guard let editedImage = editedImage else {
+                            print("画像の編集に失敗しました。")
+                            return
+                        }
+                        // 必要に応じて編集した画像を処理する
+                        // 例: アプリ内の画像ビューに表示するなど
+                    }
+                    // UserDefaultsにチェックインを記録
+                    UserDefaults.standard.set(true, forKey: "checked_in_\(checkpointId)")
+                    
+            // 通知をスケジュール
+            NotificationManager.shared.scheduleNotification(for: region.identifier, checkpointId: checkpointId)
+            CheckpointManager.shared.notificationReceived = true
+            
+            // チェックポイントの名前とIDを使用して通知をスケジュール
+            NotificationManager.shared.scheduleNotification(for: region.identifier, checkpointId: checkpointId)
+            CheckpointManager.shared.notificationReceived = true
+        }
         
-        // チェックポイントの範囲外に出たらnotificationReceivedをfalseに設定
-        CheckpointManager.shared.notificationReceived = false
+        func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
+            print("\(region.identifier)のジオフェンス領域から出ました")
+            
+            // チェックポイントの範囲外に出たらnotificationReceivedをfalseに設定
+            CheckpointManager.shared.notificationReceived = false
+        }
     }
 }
 

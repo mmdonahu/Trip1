@@ -1,17 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-    <dict>
-        <key>CFBundleDocumentTypes</key>
-        <array>
-            <dict/>
-        </array>
-        <key>CFBundleURLTypes</key>
-        <array>
-            <dict/>
-        </array>
-        <key>NSLocationWhenInUseUsageDescription</key>
-        <string>This app uses your location information to provide special cards when you visit tourist spots.</string>
-    </dict>
+<dict>
+	<key>CFBundleDocumentTypes</key>
+	<array>
+		<dict/>
+	</array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict/>
+	</array>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>Location</string>
+	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>This app uses your location information to provide special cards when you visit tourist spots.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app requires access to your location, even in the background, to know exactly where you are.</string>
+</dict>
 </plist>
-
