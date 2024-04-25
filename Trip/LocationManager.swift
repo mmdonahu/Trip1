@@ -44,6 +44,26 @@ class GeofenceManager: NSObject, CLLocationManagerDelegate {
         }
     }
     
+    func checkInitialLocation() {
+        locationManager.requestLocation() // 位置を一度だけリクエスト
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.first else { return }
+        for region in locationManager.monitoredRegions {
+            if let circularRegion = region as? CLCircularRegion, circularRegion.contains(location.coordinate) {
+                // チェックポイント内にいる場合の処理
+                NotificationManager.shared.scheduleNotification(for: region.identifier, checkpointId: Int(region.identifier.components(separatedBy: ".").first ?? "0") ?? 0)
+                CheckpointManager.shared.notificationReceived = true
+                break
+            }
+        }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("位置情報の取得に失敗: \(error)")
+    }
+    
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
         // チェックポイントの名前（identifier）からIDを抽出
         let checkpointIdString = region.identifier.components(separatedBy: ".").first ?? ""
@@ -61,8 +81,8 @@ class GeofenceManager: NSObject, CLLocationManagerDelegate {
             userDocRef.getDocument { (document, error) in
                 if let document = document, document.exists, let userName = document.data()?["name"] as? String {
                     
-            // Firebaseにデータを送信
-            VerifyCheckpontManager.shared.sendCheckpointData(checkpointId: checkpointId, checkpointName: region.identifier, userId: userId)
+                    // Firebaseにデータを送信
+                    VerifyCheckpontManager.shared.sendCheckpointData(checkpointId: checkpointId, checkpointName: region.identifier, userId: userId)
                     
                     // EditCardsManagerを使用して画像のダウンロードと編集を行う
                     EditCardsManager.shared.downloadEditAndSaveImage(checkpointId: checkpointIdString, username: userName) { editedImage in
@@ -76,20 +96,22 @@ class GeofenceManager: NSObject, CLLocationManagerDelegate {
                     // UserDefaultsにチェックインを記録
                     UserDefaults.standard.set(true, forKey: "checked_in_\(checkpointId)")
                     
-            // 通知をスケジュール
-            NotificationManager.shared.scheduleNotification(for: region.identifier, checkpointId: checkpointId)
-            CheckpointManager.shared.notificationReceived = true
-            
-            // チェックポイントの名前とIDを使用して通知をスケジュール
-            NotificationManager.shared.scheduleNotification(for: region.identifier, checkpointId: checkpointId)
-            CheckpointManager.shared.notificationReceived = true
-        }
-        
-        func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
-            print("\(region.identifier)のジオフェンス領域から出ました")
-            
-            // チェックポイントの範囲外に出たらnotificationReceivedをfalseに設定
-            CheckpointManager.shared.notificationReceived = false
+                    // 通知をスケジュール
+                    NotificationManager.shared.scheduleNotification(for: region.identifier, checkpointId: checkpointId)
+                    CheckpointManager.shared.notificationReceived = true
+                    
+                    // チェックポイントの名前とIDを使用して通知をスケジュール
+                    NotificationManager.shared.scheduleNotification(for: region.identifier, checkpointId: checkpointId)
+                    CheckpointManager.shared.notificationReceived = true
+                }
+                
+                func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
+                    print("\(region.identifier)のジオフェンス領域から出ました")
+                    
+                    // チェックポイントの範囲外に出たらnotificationReceivedをfalseに設定
+                    CheckpointManager.shared.notificationReceived = false
+                }
+            }
         }
     }
 }

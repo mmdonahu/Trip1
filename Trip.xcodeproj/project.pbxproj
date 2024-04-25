@@ -16,7 +16,7 @@
 		99B49CAD2BBE4B4800E8326B /* MomentPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B49CAC2BBE4B4800E8326B /* MomentPostView.swift */; };
 		99B49CAF2BBE4C2200E8326B /* MomentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B49CAE2BBE4C2200E8326B /* MomentManager.swift */; };
 		99B562AB2BD5EA5200E305CD /* UserInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B562AA2BD5EA5200E305CD /* UserInfoManager.swift */; };
-		99DF5F912BD24E650013F66A /* EditiCardsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DF5F902BD24E650013F66A /* EditiCardsManager.swift */; };
+		99DF5F912BD24E650013F66A /* EditCardsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DF5F902BD24E650013F66A /* EditCardsManager.swift */; };
 		99DF5F932BD24EAE0013F66A /* CongratulationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DF5F922BD24EAE0013F66A /* CongratulationsView.swift */; };
 		99DF5F952BD2508F0013F66A /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DF5F942BD2508F0013F66A /* NotificationManager.swift */; };
 		99DF5F972BD251B20013F66A /* VerifyLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99DF5F962BD251B20013F66A /* VerifyLocationManager.swift */; };
@@ -47,7 +47,7 @@
 		99B49CAC2BBE4B4800E8326B /* MomentPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentPostView.swift; sourceTree = "<group>"; };
 		99B49CAE2BBE4C2200E8326B /* MomentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentManager.swift; sourceTree = "<group>"; };
 		99B562AA2BD5EA5200E305CD /* UserInfoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoManager.swift; sourceTree = "<group>"; };
-		99DF5F902BD24E650013F66A /* EditiCardsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditiCardsManager.swift; sourceTree = "<group>"; };
+		99DF5F902BD24E650013F66A /* EditCardsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCardsManager.swift; sourceTree = "<group>"; };
 		99DF5F922BD24EAE0013F66A /* CongratulationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongratulationsView.swift; sourceTree = "<group>"; };
 		99DF5F942BD2508F0013F66A /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		99DF5F962BD251B20013F66A /* VerifyLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerifyLocationManager.swift; sourceTree = "<group>"; };
@@ -137,7 +137,7 @@
 				99B49CAE2BBE4C2200E8326B /* MomentManager.swift */,
 				99DF5F942BD2508F0013F66A /* NotificationManager.swift */,
 				99DF5F962BD251B20013F66A /* VerifyLocationManager.swift */,
-				99DF5F902BD24E650013F66A /* EditiCardsManager.swift */,
+				99DF5F902BD24E650013F66A /* EditCardsManager.swift */,
 				99E196E42BA3D2C8009CE1E4 /* Assets.xcassets */,
 				99E196E22BA3D2C7009CE1E4 /* TestView.swift */,
 				99E196E62BA3D2C8009CE1E4 /* Preview Content */,
@@ -298,7 +298,7 @@
 				99E196F12BA3D478009CE1E4 /* HomeView.swift in Sources */,
 				99B49CAD2BBE4B4800E8326B /* MomentPostView.swift in Sources */,
 				99E196F92BA3D4E3009CE1E4 /* RuleDescriptionView.swift in Sources */,
-				99DF5F912BD24E650013F66A /* EditiCardsManager.swift in Sources */,
+				99DF5F912BD24E650013F66A /* EditCardsManager.swift in Sources */,
 				99B49CAF2BBE4C2200E8326B /* MomentManager.swift in Sources */,
 				99DF5F972BD251B20013F66A /* VerifyLocationManager.swift in Sources */,
 				99E196E32BA3D2C7009CE1E4 /* TestView.swift in Sources */,
