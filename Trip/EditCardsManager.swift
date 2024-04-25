@@ -5,7 +5,7 @@ class EditCardsManager {
     static let shared = EditCardsManager()
     // チェックポイントの画像をダウンロードし、編集して保存するメソッド
     func downloadEditAndSaveImage(checkpointId: String, username: String, completion: @escaping (UIImage?) -> Void) {
-        let storageRef = Storage.storage().reference().child("checkpoints/\(checkpointId).png")
+        let storageRef = Storage.storage().reference().child("CheckpointCards/\(checkpointId).png")
         // 画像のダウンロード
         storageRef.getData(maxSize: 10 * 1024 * 1024) { data, error in
             if let error = error {
