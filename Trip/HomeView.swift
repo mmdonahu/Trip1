@@ -63,7 +63,16 @@ struct HomeView: View {
                             .font(.title)
                             .padding()
                         
-                        ProfileImageView(urlString: userInfoManager.user?.profileImageUrl ?? "default_profile_image")
+                        if let imageUrl = userInfoManager.user?.profileImageUrl, !imageUrl.isEmpty {
+                            ProfileImageView(urlString: imageUrl)
+                                .frame(width: 100, height: 100)  // 必要に応じてサイズ調整
+                        } else {
+                            Image(systemName: "person.circle.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 100, height: 100)
+                                .foregroundColor(.gray)
+                        }
                         
                         Text("Hunter Rank: \(userInfoManager.user?.hunterRank ?? "Zero")")
                             .font(.headline)
@@ -132,7 +141,7 @@ struct HomeView: View {
             }
         }
         .sheet(isPresented: $showCongratulationsView) {
-            CongratulationsView(cardImage: Image("sampleImage"))
+            CongratulationsView()
         }
     }
 }

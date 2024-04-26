@@ -22,6 +22,15 @@
                </BreakpointActionProxy>
             </Actions>
             <Locations>
+               <Location
+                  uuid = "6C462E00-8CDF-4F71-A9A5-455B70CBD723 - ba3ad5676a792f38"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "UIViewAlertForUnsatisfiableConstraints"
+                  moduleName = "UIKitCore"
+                  usesParentBreakpointCondition = "Yes">
+               </Location>
             </Locations>
          </BreakpointContent>
       </BreakpointProxy>

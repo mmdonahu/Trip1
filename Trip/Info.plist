@@ -6,10 +6,8 @@
 	<array>
 		<dict/>
 	</array>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict/>
-	</array>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>To save the certificate image</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>Location</string>

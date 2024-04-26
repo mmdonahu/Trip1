@@ -3,10 +3,26 @@ import Firebase
 
 class EditCardsManager {
     static let shared = EditCardsManager()
-    // チェックポイントの画像をダウンロードし、編集して保存するメソッド
+    
+    // 画像をドキュメントディレクトリに保存するメソッド
+    func saveImageToDocumentsDirectory(image: UIImage, imageName: String) {
+        let fileManager = FileManager.default
+        let paths = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
+        let filePath = paths[0].appendingPathComponent("\(imageName).png")
+        
+        if let data = image.pngData() {
+            do {
+                try data.write(to: filePath)
+                print("Saved image to documents directory.")
+            } catch {
+                print("Could not save image: \(error)")
+            }
+        }
+    }
+    
+    // Firebase Storageから画像をダウンロードし、アプリ内に保存するメソッド
     func downloadEditAndSaveImage(checkpointId: String, username: String, completion: @escaping (UIImage?) -> Void) {
         let storageRef = Storage.storage().reference().child("CheckpointCards/\(checkpointId).png")
-        // 画像のダウンロード
         storageRef.getData(maxSize: 10 * 1024 * 1024) { data, error in
             if let error = error {
                 print(error)
@@ -14,14 +30,13 @@ class EditCardsManager {
                 return
             }
             guard let data = data, let image = UIImage(data: data) else {
-                print("画像の読み込みに失敗")
+                print("Data could not be converted to UIImage.")
                 completion(nil)
                 return
             }
-            // 画像の編集
+            
             if let editedImage = self.drawText(image: image, username: username, date: Date()) {
-                // 画像の保存とcompletion handlerの呼び出し
-                UIImageWriteToSavedPhotosAlbum(editedImage, nil, nil, nil)
+                self.saveImageToDocumentsDirectory(image: editedImage, imageName: checkpointId)
                 completion(editedImage)
             } else {
                 completion(nil)
