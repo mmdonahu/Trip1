@@ -45,7 +45,7 @@ struct HomeView: View {
     @State private var showCheckpointArrivedMessage = false
     @State private var showCongratulationsView = false
     @ObservedObject var notificationManager = NotificationManager.shared
-    @ObservedObject var cardsManager = CardsManager()
+    @StateObject var cardsManager = CardsManager()
     
     // ユーザーのサンプルデータ
     var nextHunterRank = "Hunter Rank Single"

@@ -2,7 +2,9 @@ import SwiftUI
 
 struct CongratulationsView: View {
     @Environment(\.presentationMode) var presentationMode
+    @ObservedObject var cardsManager: CardsManager
     @State private var cardImage: UIImage?
+    let cardIndex: Int  // カードのインデックスを受け取る
     
     var body: some View {
         VStack {
@@ -15,7 +17,9 @@ struct CongratulationsView: View {
                 Text("Loading image...")
             }
             Button("Get the Certificate!") {
-                self.presentationMode.wrappedValue.dismiss()
+                // カード獲得メソッドを呼び出す
+                cardsManager.acquireCard(at: cardIndex)
+                presentationMode.wrappedValue.dismiss()
             }
             .font(.title)
         }
@@ -47,7 +51,7 @@ struct CongratulationsView: View {
 
 struct CongratulationsView_Previews: PreviewProvider {
     static var previews: some View {
-        CongratulationsView()
+        CongratulationsView(cardsManager: CardsManager(), cardIndex: 0)
     }
 }
 
