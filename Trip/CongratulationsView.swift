@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct CongratulationsView: View {
+    @Environment(\.presentationMode) var presentationMode
     @State private var cardImage: UIImage?
     
     var body: some View {
@@ -16,6 +17,9 @@ struct CongratulationsView: View {
             Text("Congratulations!")
                 .font(.title)
                 .padding()
+            Button("Return Home") {
+                self.presentationMode.wrappedValue.dismiss()
+            }
         }
         .onAppear {
             loadNextUnseenImage()

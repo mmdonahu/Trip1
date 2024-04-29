@@ -89,7 +89,7 @@ struct HomeView: View {
                         
                         HStack {
                             VStack {
-                                if NotificationManager.shared.bellState == .alerted {
+                                if notificationManager.bellState == .alerted {
                                     Text("Get a Certificate!")
                                         .font(.caption)
                                         .foregroundColor(.red)
@@ -97,12 +97,12 @@ struct HomeView: View {
                                 Image(systemName: "bell.fill")
                                     .resizable()
                                     .frame(width: 24, height: 24)
-                                    .foregroundColor(NotificationManager.shared.bellState == .alerted ? .red : .black)
+                                    .foregroundColor(notificationManager.bellState == .alerted ? .red : .black)
                                     .padding()
                                     .onTapGesture {
-                                        if NotificationManager.shared.bellState == .alerted {
+                                        if notificationManager.bellState == .alerted {
                                             self.showCongratulationsView = true
-                                            NotificationManager.shared.updateBellState(for: 1, hasCertificate: true)
+                                            notificationManager.updateBellState(for: 1, hasCertificate: true)
                                         }
                                     }
                             }

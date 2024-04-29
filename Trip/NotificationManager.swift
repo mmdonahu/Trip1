@@ -10,18 +10,19 @@ class NotificationManager: ObservableObject {
     // ベルの状態を管理するプロパティ
     enum BellState {
         case normal
-        case alerted // 赤いベル
+        case alerted // チェックポイント訪問後ダウンロード済み未表示画像
         case visited // 訪問済み
     }
     
-    func updateBellState(for checkpointId: Int, hasCertificate: Bool) {
-        print("Update Bell State Called: hasCertificate = \(hasCertificate)")
-        if hasCertificate {
-            bellState = .visited
-            print("Bell state updated to visited.")
-        } else {
+    // 以下の関数は、新しい条件に基づいてベルの状態を更新します。
+    func updateBellState(for checkpointId: Int, hasDownloaded: Bool, hasBeenViewed: Bool) {
+        print("Update Bell State Called: hasDownloaded = \(hasDownloaded), hasBeenViewed = \(hasBeenViewed)")
+        if hasDownloaded && !hasBeenViewed {
             bellState = .alerted
             print("Bell state updated to alerted.")
+        } else {
+            bellState = .normal
+            print("Bell state updated to normal.")
         }
     }
     
