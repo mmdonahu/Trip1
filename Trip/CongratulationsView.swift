@@ -14,12 +14,10 @@ struct CongratulationsView: View {
             } else {
                 Text("Loading image...")
             }
-            Text("Congratulations!")
-                .font(.title)
-                .padding()
-            Button("Return Home") {
+            Button("Get the Certificate!") {
                 self.presentationMode.wrappedValue.dismiss()
             }
+            .font(.title)
         }
         .onAppear {
             loadNextUnseenImage()

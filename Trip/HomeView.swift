@@ -45,6 +45,7 @@ struct HomeView: View {
     @State private var showCheckpointArrivedMessage = false
     @State private var showCongratulationsView = false
     @ObservedObject var notificationManager = NotificationManager.shared
+    @ObservedObject var cardsManager = CardsManager()
     
     // ユーザーのサンプルデータ
     var nextHunterRank = "Hunter Rank Single"
@@ -102,7 +103,7 @@ struct HomeView: View {
                                     .onTapGesture {
                                         if notificationManager.bellState == .alerted {
                                             self.showCongratulationsView = true
-                                            notificationManager.updateBellState(for: 1, hasCertificate: true)
+                                            NotificationManager.shared.updateBellState(for: 1, hasDownloaded: true, hasBeenViewed: false)
                                         }
                                     }
                             }
@@ -123,11 +124,15 @@ struct HomeView: View {
                             .padding(.bottom, 20)
                         
                         LazyVGrid(columns: columns, spacing: 20) {
-                            ForEach(0..<15, id: \.self) { _ in
-                                Image("skytree1")
+                            ForEach(cardsManager.cards) { card in
+                                Image(card.isAcquired ? card.frontImageName : "behindCardPic")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 100, height: 140)
+                                    .onTapGesture {
+                                        // ここでカードのタップに応じた処理を追加する
+                                        // 例えばカードを獲得するなど
+                                    }
                             }
                         }
                         .padding(.bottom, 20)
@@ -137,7 +142,7 @@ struct HomeView: View {
             .navigationBarHidden(true)
             .onAppear {
                 userInfoManager.loadUserInfo()
-                NotificationManager.shared.updateBellState(for: 1, hasCertificate: false)
+                NotificationManager.shared.updateBellState(for: 1, hasDownloaded: true, hasBeenViewed: false)
             }
         }
         .sheet(isPresented: $showCongratulationsView) {

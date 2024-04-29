@@ -13,6 +13,7 @@
 		994E878D2BABC7F700956C69 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 994E878C2BABC7F700956C69 /* GoogleService-Info.plist */; };
 		994E878F2BABCA2200956C69 /* SignupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 994E878E2BABCA2200956C69 /* SignupView.swift */; };
 		9962A1C22BA41AF40011B320 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9962A1C12BA41AF40011B320 /* LocationManager.swift */; };
+		99A785092BDF59BB0098444A /* CardsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A785082BDF59BB0098444A /* CardsManager.swift */; };
 		99B49CAD2BBE4B4800E8326B /* MomentPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B49CAC2BBE4B4800E8326B /* MomentPostView.swift */; };
 		99B49CAF2BBE4C2200E8326B /* MomentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B49CAE2BBE4C2200E8326B /* MomentManager.swift */; };
 		99B562AB2BD5EA5200E305CD /* UserInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99B562AA2BD5EA5200E305CD /* UserInfoManager.swift */; };
@@ -44,6 +45,7 @@
 		994E878C2BABC7F700956C69 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		994E878E2BABCA2200956C69 /* SignupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupView.swift; sourceTree = "<group>"; };
 		9962A1C12BA41AF40011B320 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		99A785082BDF59BB0098444A /* CardsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardsManager.swift; sourceTree = "<group>"; };
 		99B49CAC2BBE4B4800E8326B /* MomentPostView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentPostView.swift; sourceTree = "<group>"; };
 		99B49CAE2BBE4C2200E8326B /* MomentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentManager.swift; sourceTree = "<group>"; };
 		99B562AA2BD5EA5200E305CD /* UserInfoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoManager.swift; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 				99B49CAC2BBE4B4800E8326B /* MomentPostView.swift */,
 				992BB8702BA3D91400825A55 /* Sky.mp4 */,
 				99DF5F982BD26B090013F66A /* HunterRankManager.swift */,
+				99A785082BDF59BB0098444A /* CardsManager.swift */,
 				99B562AA2BD5EA5200E305CD /* UserInfoManager.swift */,
 				9962A1C12BA41AF40011B320 /* LocationManager.swift */,
 				99B49CAE2BBE4C2200E8326B /* MomentManager.swift */,
@@ -305,6 +308,7 @@
 				9919B32F2BBA331B00D057E6 /* UserInformationView.swift in Sources */,
 				99DF5F932BD24EAE0013F66A /* CongratulationsView.swift in Sources */,
 				99E196F52BA3D4AB009CE1E4 /* MomentView.swift in Sources */,
+				99A785092BDF59BB0098444A /* CardsManager.swift in Sources */,
 				99E196F72BA3D4C2009CE1E4 /* PermissionLocationView.swift in Sources */,
 				99E196E12BA3D2C7009CE1E4 /* TripApp.swift in Sources */,
 			);
