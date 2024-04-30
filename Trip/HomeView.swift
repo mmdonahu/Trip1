@@ -45,7 +45,8 @@ struct HomeView: View {
     @State private var showCheckpointArrivedMessage = false
     @State private var showCongratulationsView = false
     @ObservedObject var notificationManager = NotificationManager.shared
-    @StateObject var cardsManager = CardsManager()
+    @ObservedObject var cardsManager = CardsManager()
+    @State private var selectedCardIndex: Int?
     
     // ユーザーのサンプルデータ
     var nextHunterRank = "Hunter Rank Single"
@@ -125,14 +126,34 @@ struct HomeView: View {
                         
                         LazyVGrid(columns: columns, spacing: 20) {
                             ForEach(cardsManager.cards) { card in
-                                Image(card.isAcquired ? card.frontImageName : "behindCardPic")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 100, height: 140)
-                                    .onTapGesture {
-                                        // ここでカードのタップに応じた処理を追加する
-                                        // 例えばカードを獲得するなど
+                                if card.isAcquired {
+                                    // カードをタップした時の処理
+                                    Image("card\(index + 1)")
+                                    // 獲得したカードの画像を表示
+                                    if let imagePath = card.localImagePath, let image = UIImage(contentsOfFile: imagePath) {
+                                        Image(uiImage: image)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 100, height: 140)
+                                            .onTapGesture {
+                                                self.selectedCardIndex = index // この行を追加
+                                                self.showCongratulationsView = true
+                                            }
+                                    } else {
+                                        // ローカルに画像がない場合はプレースホルダーを表示
+                                        Image("placeholderImage")
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 100, height: 140)
                                     }
+                                } else {
+                                    // 獲得していないカードの裏面を表示
+                                    Image("behindCardPic")
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 100, height: 140)
+                                }
+                            }
                             }
                         }
                         .padding(.bottom, 20)
@@ -146,8 +167,9 @@ struct HomeView: View {
             }
         }
         .sheet(isPresented: $showCongratulationsView) {
-            CongratulationsView()
-        }
+            if let index = selectedCardIndex {
+                CongratulationsView(cardsManager: cardsManager, cardIndex: index)
+            }
     }
 }
         
