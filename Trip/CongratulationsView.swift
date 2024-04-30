@@ -17,8 +17,8 @@ struct CongratulationsView: View {
                 Text("Loading image...")
             }
             Button("Get the Certificate!") {
-                // カード獲得メソッドを呼び出す
-                cardsManager.acquireCard(at: cardIndex)
+                let cardIdentifier = cardsManager.cards[cardIndex].identifier
+                cardsManager.acquireCard(identifier: cardIdentifier)
                 presentationMode.wrappedValue.dismiss()
             }
             .font(.title)

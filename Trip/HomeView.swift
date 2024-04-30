@@ -104,10 +104,10 @@ struct HomeView: View {
                                     .onTapGesture {
                                         if notificationManager.bellState == .alerted {
                                             self.showCongratulationsView = true
-                                            NotificationManager.shared.updateBellState(for: 1, hasDownloaded: true, hasBeenViewed: false)
                                         }
                                     }
                             }
+
                             
                             NavigationLink(destination: UserInformationView()) {
                                 Text("Edit Profile")
@@ -125,10 +125,9 @@ struct HomeView: View {
                             .padding(.bottom, 20)
                         
                         LazyVGrid(columns: columns, spacing: 20) {
-                            ForEach(cardsManager.cards) { card in
+                            ForEach(Array(cardsManager.cards.enumerated()), id: \.element.id) { index, card in
                                 if card.isAcquired {
                                     // カードをタップした時の処理
-                                    Image("card\(index + 1)")
                                     // 獲得したカードの画像を表示
                                     if let imagePath = card.localImagePath, let image = UIImage(contentsOfFile: imagePath) {
                                         Image(uiImage: image)
@@ -136,7 +135,7 @@ struct HomeView: View {
                                             .aspectRatio(contentMode: .fit)
                                             .frame(width: 100, height: 140)
                                             .onTapGesture {
-                                                self.selectedCardIndex = index // この行を追加
+                                                self.selectedCardIndex = index // 正しいindexを使用
                                                 self.showCongratulationsView = true
                                             }
                                     } else {
@@ -163,12 +162,13 @@ struct HomeView: View {
             .navigationBarHidden(true)
             .onAppear {
                 userInfoManager.loadUserInfo()
-                NotificationManager.shared.updateBellState(for: 1, hasDownloaded: true, hasBeenViewed: false)
+                NotificationManager.shared.updateBellState(cards: cardsManager.cards)
             }
-        }
-        .sheet(isPresented: $showCongratulationsView) {
-            if let index = selectedCardIndex {
-                CongratulationsView(cardsManager: cardsManager, cardIndex: index)
+        
+            .sheet(isPresented: $showCongratulationsView) {
+                if let selectedCardIndex = selectedCardIndex {
+                    CongratulationsView(cardsManager: cardsManager, cardIndex: selectedCardIndex)
+                }
             }
     }
 }

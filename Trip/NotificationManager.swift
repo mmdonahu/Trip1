@@ -10,34 +10,35 @@ class NotificationManager: ObservableObject {
     // ベルの状態を管理するプロパティ
     enum BellState {
         case normal
-        case alerted // チェックポイント訪問後ダウンロード済み未表示画像
-        case visited // 訪問済み
+        case alerted // 獲得済みで未表示のカードがある場合
     }
     
-    // 以下の関数は、新しい条件に基づいてベルの状態を更新します。
-    func updateBellState(for checkpointId: Int, hasDownloaded: Bool, hasBeenViewed: Bool) {
-        print("Update Bell State Called: hasDownloaded = \(hasDownloaded), hasBeenViewed = \(hasBeenViewed)")
-        if hasDownloaded && !hasBeenViewed {
+    // カードの状態に基づいてベルの状態を更新する関数
+    func updateBellState(cards: [Card]) {
+        // 獲得済みで未表示のカードが存在するかをチェック
+        let hasUnseenAcquiredCards = cards.contains { $0.isAcquired }
+        
+        if hasUnseenAcquiredCards {
             bellState = .alerted
-            print("Bell state updated to alerted.")
+            print("Bell state updated to alerted due to unseen acquired cards.")
         } else {
             bellState = .normal
-            print("Bell state updated to normal.")
+            print("Bell state reverted to normal.")
         }
     }
     
-    // 通知をトリガーする新しい関数
-    func triggerBellStateNotification(for message: String, checkpointId: Int) {
+    // 通知をトリガーする関数
+    func triggerNotification(for message: String) {
         let content = UNMutableNotificationContent()
-        content.title = NSString.localizedUserNotificationString(forKey: "Alert", arguments: nil)
-        content.body = NSString.localizedUserNotificationString(forKey: message, arguments: nil)
+        content.title = "Alert"
+        content.body = message
         content.sound = UNNotificationSound.default
         
-        let request = UNNotificationRequest(identifier: "checkpointNotification_\(checkpointId)", content: content, trigger: nil)
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: nil)
         let center = UNUserNotificationCenter.current()
-        center.add(request) { (error) in
+        center.add(request) { error in
             if let error = error {
-                print("Error \(error.localizedDescription)")
+                print("Error sending notification: \(error.localizedDescription)")
             }
         }
     }

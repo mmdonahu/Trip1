@@ -18,6 +18,13 @@ class CardsManager: ObservableObject {
             // 例えば、ローカルのファイル名を取得し、Cardオブジェクトを更新します。
         }
     }
+    
+    func moveAcquiredCardToFront(at index: Int) {
+        guard index < cards.count, cards[index].isAcquired else { return }
+        
+        let acquiredCard = cards.remove(at: index)
+        cards.insert(acquiredCard, at: 0)
+    }
 }
 
 struct Card: Identifiable {
