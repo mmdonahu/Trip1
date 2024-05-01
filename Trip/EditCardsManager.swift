@@ -2,7 +2,7 @@ import UIKit
 import Firebase
 
 class EditCardsManager {
-    static let shared = EditCardsManager()
+    
     var cardsManager: CardsManager
     
     init(cardsManager: CardsManager) {

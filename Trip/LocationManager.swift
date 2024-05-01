@@ -104,13 +104,6 @@ class GeofenceManager: NSObject, CLLocationManagerDelegate {
                     NotificationManager.shared.scheduleNotification(for: region.identifier, checkpointId: checkpointId)
                     CheckpointManager.shared.notificationReceived = true
                 }
-                
-                func locationManager(_ manager: CLLocationManager, didExitRegion region: CLRegion) {
-                    print("\(region.identifier)のジオフェンス領域から出ました")
-                    
-                    // チェックポイントの範囲外に出たらnotificationReceivedをfalseに設定
-                    CheckpointManager.shared.notificationReceived = false
-                }
             }
         }
     }

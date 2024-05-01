@@ -41,10 +41,7 @@ struct ProfileImageView: View {
 
 struct HomeView: View {
     @ObservedObject private var userInfoManager = UserInfoManager.shared
-    @EnvironmentObject var checkpointManager: CheckpointManager
-    @State private var showCheckpointArrivedMessage = false
     @State private var showCongratulationsView = false
-    @ObservedObject var notificationManager = NotificationManager.shared
     @ObservedObject var cardsManager = CardsManager()
     @State private var selectedCardIndex: Int?
     
@@ -91,7 +88,7 @@ struct HomeView: View {
                         
                         HStack {
                             VStack {
-                                if notificationManager.bellState == .alerted {
+                                if cardsManager.hasUnacquiredCards {
                                     Text("Get a Certificate!")
                                         .font(.caption)
                                         .foregroundColor(.red)
@@ -99,15 +96,15 @@ struct HomeView: View {
                                 Image(systemName: "bell.fill")
                                     .resizable()
                                     .frame(width: 24, height: 24)
-                                    .foregroundColor(notificationManager.bellState == .alerted ? .red : .black)
+                                    .foregroundColor(cardsManager.hasUnacquiredCards ? .red : .black) // 未獲得のカードがあれば赤く表示
                                     .padding()
                                     .onTapGesture {
-                                        if notificationManager.bellState == .alerted {
-                                            self.showCongratulationsView = true
+                                        if cardsManager.hasUnacquiredCards {
+                                            self.showCongratulationsView = true // 未獲得のカードがあれば CongratulationsView を表示
                                         }
                                     }
                             }
-
+                        }
                             
                             NavigationLink(destination: UserInformationView()) {
                                 Text("Edit Profile")
@@ -158,17 +155,16 @@ struct HomeView: View {
                         .padding(.bottom, 20)
                     }
                 }
-            }
-            .navigationBarHidden(true)
-            .onAppear {
-                userInfoManager.loadUserInfo()
-                NotificationManager.shared.updateBellState(cards: cardsManager.cards)
-            }
+        .navigationBarHidden(true)
+        .onAppear {
+            userInfoManager.loadUserInfo()
+            cardsManager.updateHasUnacquiredCards()
+        }
         
-            .sheet(isPresented: $showCongratulationsView) {
-                if let selectedCardIndex = selectedCardIndex {
-                    CongratulationsView(cardsManager: cardsManager, cardIndex: selectedCardIndex)
-                }
+        .sheet(isPresented: $showCongratulationsView) {
+            if let index = selectedCardIndex {
+                CongratulationsView(cardsManager: cardsManager, cardIndex: index)
+            }            
             }
     }
 }

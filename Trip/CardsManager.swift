@@ -2,18 +2,27 @@ import Foundation
 
 class CardsManager: ObservableObject {
     @Published var cards: [Card] = []
+    // 未獲得のカードが存在するかどうかを追跡するプロパティ
+    var hasUnacquiredCards: Bool = false
     
     init() {
         // IDを基にカードオブジェクトを初期化します。
         cards = (1...15).map { index in
             Card(isAcquired: false, identifier: "card\(index)")
         }
+        updateHasUnacquiredCards()  // 初期状態の未獲得カードを更新
     }
     
+    //未獲得カードの有無を確認
+    func updateHasUnacquiredCards() {
+        hasUnacquiredCards = cards.contains { !$0.isAcquired }
+    }
+    
+    //カードの状態を直接「未獲得」に設定
     func updateCardAsUnacquired(identifier: String) {
         if let index = cards.firstIndex(where: { $0.identifier == identifier }) {
             cards[index].isAcquired = false
-            updateHasUnacquiredCards()  // 未獲得カードの存在を更新
+            updateHasUnacquiredCards()
         }
     }
     

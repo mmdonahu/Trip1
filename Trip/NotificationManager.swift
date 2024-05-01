@@ -5,28 +5,6 @@ import Combine
 class NotificationManager: ObservableObject {
     static let shared = NotificationManager()
     
-    @Published var bellState: BellState = .normal
-    
-    // ベルの状態を管理するプロパティ
-    enum BellState {
-        case normal
-        case alerted // 獲得済みで未表示のカードがある場合
-    }
-    
-    // カードの状態に基づいてベルの状態を更新する関数
-    func updateBellState(cards: [Card]) {
-        // 獲得済みで未表示のカードが存在するかをチェック
-        let hasUnseenAcquiredCards = cards.contains { $0.isAcquired }
-        
-        if hasUnseenAcquiredCards {
-            bellState = .alerted
-            print("Bell state updated to alerted due to unseen acquired cards.")
-        } else {
-            bellState = .normal
-            print("Bell state reverted to normal.")
-        }
-    }
-    
     // 通知をトリガーする関数
     func triggerNotification(for message: String) {
         let content = UNMutableNotificationContent()
