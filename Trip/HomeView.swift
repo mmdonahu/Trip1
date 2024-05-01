@@ -104,12 +104,12 @@ struct HomeView: View {
                                         }
                                     }
                             }
-                        }
                             
                             NavigationLink(destination: UserInformationView()) {
                                 Text("Edit Profile")
                                     .fontWeight(.bold)
                                     .foregroundColor(.blue)
+                            }
                             }
                         }
                         

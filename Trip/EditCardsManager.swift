@@ -2,9 +2,9 @@ import UIKit
 import Firebase
 
 class EditCardsManager {
-    
-    var cardsManager: CardsManager
-    
+    static let shared = EditCardsManager()
+    var cardsManager: CardsManager?
+    private init() {}
     init(cardsManager: CardsManager) {
         self.cardsManager = cardsManager
     }
@@ -36,7 +36,7 @@ class EditCardsManager {
                 if let editedImage = self.drawText(image: image, username: username, date: Date()) {
                     self.saveImageToDocumentsDirectory(image: editedImage, imageName: checkpointId)
                     // 未獲得カードとしてCardsManagerに通知
-                    self.cardsManager.updateCardAsUnacquired(identifier: checkpointId)
+                    self.cardsManager?.updateCardAsUnacquired(identifier: checkpointId)
                     completion(editedImage)
                 } else {
                     completion(nil)
