@@ -10,10 +10,18 @@ class CardsManager: ObservableObject {
         }
     }
     
+    func updateCardAsUnacquired(identifier: String) {
+        if let index = cards.firstIndex(where: { $0.identifier == identifier }) {
+            cards[index].isAcquired = false
+            updateHasUnacquiredCards()  // 未獲得カードの存在を更新
+        }
+    }
+    
     // カードを獲得するメソッド
     func acquireCard(identifier: String) {
         if let index = cards.firstIndex(where: { $0.identifier == identifier }) {
             cards[index].isAcquired = true
+            updateHasUnacquiredCards()
             // 獲得したカードの情報を更新するためのコードをここに追加します。
             // 例えば、ローカルのファイル名を取得し、Cardオブジェクトを更新します。
         }

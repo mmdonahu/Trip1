@@ -3,6 +3,11 @@ import Firebase
 
 class EditCardsManager {
     static let shared = EditCardsManager()
+    var cardsManager: CardsManager
+    
+    init(cardsManager: CardsManager) {
+        self.cardsManager = cardsManager
+    }
     
     // 画像をドキュメントディレクトリに保存するメソッド
     func saveImageToDocumentsDirectory(image: UIImage, imageName: String) {
@@ -27,22 +32,19 @@ class EditCardsManager {
             if let error = error {
                 print(error)
                 completion(nil)
-                return
-            }
-            guard let data = data, let image = UIImage(data: data) else {
-                print("Data could not be converted to UIImage.")
-                completion(nil)
-                return
-            }
-            
-            if let editedImage = self.drawText(image: image, username: username, date: Date()) {
-                self.saveImageToDocumentsDirectory(image: editedImage, imageName: checkpointId)
-                completion(editedImage)
-            } else {
-                completion(nil)
+            } else if let data = data, let image = UIImage(data: data) {
+                if let editedImage = self.drawText(image: image, username: username, date: Date()) {
+                    self.saveImageToDocumentsDirectory(image: editedImage, imageName: checkpointId)
+                    // 未獲得カードとしてCardsManagerに通知
+                    self.cardsManager.updateCardAsUnacquired(identifier: checkpointId)
+                    completion(editedImage)
+                } else {
+                    completion(nil)
+                }
             }
         }
     }
+
     
     // 画像にユーザー名と日時のテキストを追加するメソッド
     func drawText(image: UIImage, username: String, date: Date) -> UIImage? {
