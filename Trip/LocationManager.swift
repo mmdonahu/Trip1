@@ -86,8 +86,7 @@ class GeofenceManager: NSObject, CLLocationManagerDelegate {
                 VerifyCheckpontManager.shared.sendCheckpointData(checkpointId: checkpointId, checkpointName: region.identifier, userId: userId)
                 
                 // EditCardsManagerを使用して画像のダウンロードと編集を行う
-                EditCardsManager.shared.downloadEditAndSaveImage(checkpointId: checkpointIdString, username: document?.data()?["name"] as? String ?? "Unknown") { editedImage in
-                    guard let editedImage = editedImage else {
+                EditCardsManager.shared.editAndUploadImage(checkpointId: checkpointIdString, userId: userId, date: Date())
                         print("画像の編集に失敗しました。")
                         return
                     }
@@ -99,9 +98,6 @@ class GeofenceManager: NSObject, CLLocationManagerDelegate {
                 checkpointRef.setData(["checkedIn": true, "timestamp": FieldValue.serverTimestamp()])
             }
         }
-    }
-
-}
 
 class CheckpointManager: ObservableObject {
     static let shared = CheckpointManager() // シングルトンパターンを使用

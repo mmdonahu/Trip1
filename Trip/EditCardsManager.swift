@@ -1,50 +1,66 @@
 import UIKit
 import Firebase
+import FirebaseStorage
+import FirebaseFirestore
 
 class EditCardsManager {
     static let shared = EditCardsManager()
-    var cardsManager: CardsManager?
     private init() {}
-    init(cardsManager: CardsManager) {
-        self.cardsManager = cardsManager
-    }
     
-    // 画像をドキュメントディレクトリに保存するメソッド
-    func saveImageToDocumentsDirectory(image: UIImage, imageName: String) {
-        let fileManager = FileManager.default
-        let paths = fileManager.urls(for: .documentDirectory, in: .userDomainMask)
-        let filePath = paths[0].appendingPathComponent("\(imageName).png")
+    // Firebase Storageから元の画像をダウンロードし、テキストを追加して再アップロードするメソッド
+    func editAndUploadImage(checkpointId: String, userId: String, date: Date) {
+        let dateString = DateFormatter.localizedString(from: date, dateStyle: .short, timeStyle: .none).replacingOccurrences(of: "/", with: "-")
+        let imageName = "\(checkpointId)_\(dateString).png"
+        let storageRef = Storage.storage().reference().child("OriginalImages/\(checkpointId).png")
         
-        if let data = image.pngData() {
-            do {
-                try data.write(to: filePath)
-                print("Saved image to documents directory.")
-            } catch {
-                print("Could not save image: \(error)")
-            }
-        }
-    }
-    
-    // Firebase Storageから画像をダウンロードし、アプリ内に保存するメソッド
-    func downloadEditAndSaveImage(checkpointId: String, username: String, completion: @escaping (UIImage?) -> Void) {
-        let storageRef = Storage.storage().reference().child("CheckpointCards/\(checkpointId).png")
+        // 元の画像をダウンロード
         storageRef.getData(maxSize: 10 * 1024 * 1024) { data, error in
             if let error = error {
-                print(error)
-                completion(nil)
-            } else if let data = data, let image = UIImage(data: data) {
-                if let editedImage = self.drawText(image: image, username: username, date: Date()) {
-                    self.saveImageToDocumentsDirectory(image: editedImage, imageName: checkpointId)
-                    // 未獲得カードとしてCardsManagerに通知
-                    self.cardsManager?.updateCardAsUnacquired(identifier: checkpointId)
-                    completion(editedImage)
-                } else {
-                    completion(nil)
+                print("Error downloading image: \(error)")
+                return
+            }
+            guard let data = data, let image = UIImage(data: data) else {
+                print("Error processing downloaded data.")
+                return
+            }
+            
+            // 画像にテキストを追加
+            guard let editedImage = self.drawText(image: image, username: userId, date: date),
+                  let editedImageData = editedImage.pngData() else {
+                print("Failed to edit image or convert to PNG.")
+                return
+            }
+            
+            // 編集済みの画像をFirebase Storageにアップロード
+            let editedImageRef = Storage.storage().reference().child("Certificates/\(userId)/\(imageName)")
+            editedImageRef.putData(editedImageData, metadata: nil) { metadata, error in
+                if let error = error {
+                    print("Error uploading edited image: \(error)")
+                    return
+                }
+                // アップロードされた画像のURLを取得してFirestoreに保存
+                editedImageRef.downloadURL { url, error in
+                    guard let downloadURL = url else {
+                        print("Error getting download URL: \(error?.localizedDescription ?? "unknown error")")
+                        return
+                    }
+                    self.saveImageURLToFirestore(userId: userId, checkpointId: checkpointId, imageUrl: downloadURL.absoluteString)
                 }
             }
         }
     }
-
+    
+    // Firestoreに画像のURLを保存するメソッド
+    private func saveImageURLToFirestore(userId: String, checkpointId: String, imageUrl: String) {
+        let docRef = Firestore.firestore().collection("checkpoints").document(userId).collection("images").document(checkpointId)
+        docRef.setData(["imageUrl": imageUrl]) { error in
+            if let error = error {
+                print("Error saving image URL to Firestore: \(error)")
+            } else {
+                print("Image URL successfully saved to Firestore.")
+            }
+        }
+    }
     
     // 画像にユーザー名と日時のテキストを追加するメソッド
     func drawText(image: UIImage, username: String, date: Date) -> UIImage? {

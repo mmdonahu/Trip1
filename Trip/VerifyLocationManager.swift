@@ -11,16 +11,17 @@ class VerifyCheckpontManager {
     func sendCheckpointData(checkpointId: Int, checkpointName: String, userId: String) {
         let db = Firestore.firestore()
         let timestamp = Timestamp(date: Date())
-        db.collection("checkpoints").addDocument(data: [
+        let docId = "\(userId)_\(checkpointId)" // ユーザーIDとチェックポイントIDを組み合わせたドキュメントID
+        db.collection("checkpoints").document(docId).setData([
             "checkpointsId": checkpointId,
             "checkpointsName": checkpointName,
             "timestamp": timestamp,
             "userId": userId
         ]) { err in
             if let err = err {
-                print("Error adding document: \(err)")
+                print("Error setting document: \(err)")
             } else {
-                print("Document added with ID: \(checkpointId)")
+                print("Document successfully set with ID: \(docId)")
             }
         }
     }
