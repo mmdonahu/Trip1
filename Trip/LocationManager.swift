@@ -52,9 +52,6 @@ class GeofenceManager: NSObject, CLLocationManagerDelegate {
         guard let location = locations.first else { return }
         for region in locationManager.monitoredRegions {
             if let circularRegion = region as? CLCircularRegion, circularRegion.contains(location.coordinate) {
-                // チェックポイント内にいる場合の処理
-                NotificationManager.shared.scheduleNotification(for: region.identifier, checkpointId: Int(region.identifier.components(separatedBy: ".").first ?? "0") ?? 0)
-                CheckpointManager.shared.notificationReceived = true
                 break
             }
         }
@@ -69,44 +66,41 @@ class GeofenceManager: NSObject, CLLocationManagerDelegate {
         let checkpointIdString = region.identifier.components(separatedBy: ".").first ?? ""
         let checkpointId = Int(checkpointIdString) ?? 0 // 数値変換できない場合は0を代入
         
-        // UserDefaultsを確認して既にチェックインしているかを判断
-        if UserDefaults.standard.bool(forKey: "checked_in_\(checkpointId)") == false {
-            // まだチェックインしていない場合はFirebaseにデータを送信
-            guard let userId = Auth.auth().currentUser?.uid else {
-                print("ユーザーIDが取得できません。")
+        // ユーザーIDが取得できるかチェック
+        guard let userId = Auth.auth().currentUser?.uid else {
+            print("ユーザーIDが取得できません。")
+            return
+        }
+        
+        // Firebaseでチェックイン状態を確認
+        let checkpointRef = Firestore.firestore().collection("checkpoints").document("\(userId)_\(checkpointId)")
+        checkpointRef.getDocument { document, error in
+            if let error = error {
+                print("エラー: \(error.localizedDescription)")
                 return
             }
-            // Firebaseからユーザー名を取得する
-            let userDocRef = Firestore.firestore().collection("users").document(userId)
-            userDocRef.getDocument { (document, error) in
-                if let document = document, document.exists, let userName = document.data()?["name"] as? String {
-                    
-                    // Firebaseにデータを送信
-                    VerifyCheckpontManager.shared.sendCheckpointData(checkpointId: checkpointId, checkpointName: region.identifier, userId: userId)
-                    
-                    // EditCardsManagerを使用して画像のダウンロードと編集を行う
-                    EditCardsManager.shared.downloadEditAndSaveImage(checkpointId: checkpointIdString, username: userName) { editedImage in
-                        guard let editedImage = editedImage else {
-                            print("画像の編集に失敗しました。")
-                            return
-                        }
-                        // 必要に応じて編集した画像を処理する
-                        // 例: アプリ内の画像ビューに表示するなど
+            
+            // ドキュメントが存在しない場合、ユーザーはまだこのチェックポイントに到達していない
+            if document?.exists == false {
+                // Firebaseにデータを送信
+                VerifyCheckpontManager.shared.sendCheckpointData(checkpointId: checkpointId, checkpointName: region.identifier, userId: userId)
+                
+                // EditCardsManagerを使用して画像のダウンロードと編集を行う
+                EditCardsManager.shared.downloadEditAndSaveImage(checkpointId: checkpointIdString, username: document?.data()?["name"] as? String ?? "Unknown") { editedImage in
+                    guard let editedImage = editedImage else {
+                        print("画像の編集に失敗しました。")
+                        return
                     }
-                    // UserDefaultsにチェックインを記録
-                    UserDefaults.standard.set(true, forKey: "checked_in_\(checkpointId)")
-                    
-                    // 通知をスケジュール
-                    NotificationManager.shared.scheduleNotification(for: region.identifier, checkpointId: checkpointId)
-                    CheckpointManager.shared.notificationReceived = true
-                    
-                    // チェックポイントの名前とIDを使用して通知をスケジュール
-                    NotificationManager.shared.scheduleNotification(for: region.identifier, checkpointId: checkpointId)
-                    CheckpointManager.shared.notificationReceived = true
+                    // 必要に応じて編集した画像を処理する
+                    // 例: アプリ内の画像ビューに表示するなど
                 }
+                
+                // Firebaseにチェックインを記録
+                checkpointRef.setData(["checkedIn": true, "timestamp": FieldValue.serverTimestamp()])
             }
         }
     }
+
 }
 
 class CheckpointManager: ObservableObject {

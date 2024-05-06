@@ -1,6 +1,7 @@
 import Foundation
 
 class CardsManager: ObservableObject {
+    static let shared = CardsManager()
     @Published var cards: [Card] = []
     // 未獲得のカードが存在するかどうかを追跡するプロパティ
     var hasUnacquiredCards: Bool = false

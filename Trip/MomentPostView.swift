@@ -1,5 +1,6 @@
 import SwiftUI
 import Firebase
+import FirebaseFirestore
 
 struct MomentPostView: View {
     @State private var postText: String = ""

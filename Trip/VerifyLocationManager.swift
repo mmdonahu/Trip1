@@ -1,5 +1,7 @@
 import Foundation
 import Firebase
+import FirebaseFirestore
+
 
 class VerifyCheckpontManager {
     static let shared = VerifyCheckpontManager()
