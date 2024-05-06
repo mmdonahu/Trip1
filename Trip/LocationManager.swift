@@ -61,43 +61,20 @@ class GeofenceManager: NSObject, CLLocationManagerDelegate {
         print("位置情報の取得に失敗: \(error)")
     }
     
+    // LocationManager.swift
     func locationManager(_ manager: CLLocationManager, didEnterRegion region: CLRegion) {
-        // チェックポイントの名前（identifier）からIDを抽出
         let checkpointIdString = region.identifier.components(separatedBy: ".").first ?? ""
-        let checkpointId = Int(checkpointIdString) ?? 0 // 数値変換できない場合は0を代入
+        let checkpointId = Int(checkpointIdString) ?? 0
         
-        // ユーザーIDが取得できるかチェック
         guard let userId = Auth.auth().currentUser?.uid else {
             print("ユーザーIDが取得できません。")
             return
         }
         
-        // Firebaseでチェックイン状態を確認
-        let checkpointRef = Firestore.firestore().collection("checkpoints").document("\(userId)_\(checkpointId)")
-        checkpointRef.getDocument { document, error in
-            if let error = error {
-                print("エラー: \(error.localizedDescription)")
-                return
-            }
-            
-            // ドキュメントが存在しない場合、ユーザーはまだこのチェックポイントに到達していない
-            if document?.exists == false {
-                // Firebaseにデータを送信
-                VerifyCheckpontManager.shared.sendCheckpointData(checkpointId: checkpointId, checkpointName: region.identifier, userId: userId)
-                
-                // EditCardsManagerを使用して画像のダウンロードと編集を行う
-                EditCardsManager.shared.editAndUploadImage(checkpointId: checkpointIdString, userId: userId, date: Date())
-                        print("画像の編集に失敗しました。")
-                        return
-                    }
-                    // 必要に応じて編集した画像を処理する
-                    // 例: アプリ内の画像ビューに表示するなど
-                }
-                
-                // Firebaseにチェックインを記録
-                checkpointRef.setData(["checkedIn": true, "timestamp": FieldValue.serverTimestamp()])
-            }
-        }
+        // VerifyLocationManagerを使用してチェックポイントデータの確認と送信を行う
+        VerifyLocationManager.shared.checkAndSendCheckpointData(checkpointId: checkpointId, checkpointName: region.identifier, userId: userId)
+    }
+}
 
 class CheckpointManager: ObservableObject {
     static let shared = CheckpointManager() // シングルトンパターンを使用

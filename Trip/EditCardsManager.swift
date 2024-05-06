@@ -7,11 +7,23 @@ class EditCardsManager {
     static let shared = EditCardsManager()
     private init() {}
     
+    // Firestoreに画像のURLを保存する
+    private func saveImageURLToFirestore(userId: String, checkpointId: String, imageUrl: String) {
+        let docRef = Firestore.firestore().collection("checkpoints").document("\(userId)_\(checkpointId)")
+        docRef.setData(["certificateUrl": imageUrl], merge: true) { error in
+            if let error = error {
+                print("Error saving image URL to Firestore: \(error)")
+            } else {
+                print("Image URL successfully saved to Firestore.")
+            }
+        }
+    }
+    
     // Firebase Storageから元の画像をダウンロードし、テキストを追加して再アップロードするメソッド
     func editAndUploadImage(checkpointId: String, userId: String, date: Date) {
         let dateString = DateFormatter.localizedString(from: date, dateStyle: .short, timeStyle: .none).replacingOccurrences(of: "/", with: "-")
         let imageName = "\(checkpointId)_\(dateString).png"
-        let storageRef = Storage.storage().reference().child("OriginalImages/\(checkpointId).png")
+        let storageRef = Storage.storage().reference().child("CheckpointCards/\(checkpointId).png")
         
         // 元の画像をダウンロード
         storageRef.getData(maxSize: 10 * 1024 * 1024) { data, error in
@@ -38,26 +50,13 @@ class EditCardsManager {
                     print("Error uploading edited image: \(error)")
                     return
                 }
-                // アップロードされた画像のURLを取得してFirestoreに保存
                 editedImageRef.downloadURL { url, error in
-                    guard let downloadURL = url else {
+                    if let downloadURL = url {
+                        self.saveImageURLToFirestore(userId: userId, checkpointId: checkpointId, imageUrl: downloadURL.absoluteString)
+                    } else {
                         print("Error getting download URL: \(error?.localizedDescription ?? "unknown error")")
-                        return
                     }
-                    self.saveImageURLToFirestore(userId: userId, checkpointId: checkpointId, imageUrl: downloadURL.absoluteString)
                 }
-            }
-        }
-    }
-    
-    // Firestoreに画像のURLを保存するメソッド
-    private func saveImageURLToFirestore(userId: String, checkpointId: String, imageUrl: String) {
-        let docRef = Firestore.firestore().collection("checkpoints").document(userId).collection("images").document(checkpointId)
-        docRef.setData(["imageUrl": imageUrl]) { error in
-            if let error = error {
-                print("Error saving image URL to Firestore: \(error)")
-            } else {
-                print("Image URL successfully saved to Firestore.")
             }
         }
     }
