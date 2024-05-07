@@ -11,8 +11,7 @@ class VerifyLocationManager {
     
     func checkAndSendCheckpointData(checkpointId: Int, checkpointName: String, userId: String) {
         let db = Firestore.firestore()
-        let docId = "\(userId)_\(checkpointId)"
-        let checkpointRef = db.collection("checkpoints").document(docId)
+        let userDocRef = db.collection("users").document(userId)
         
         // ユーザー名を取得
         userDocRef.getDocument { (userDoc, userError) in
@@ -28,31 +27,33 @@ class VerifyLocationManager {
             
             let docId = "\(userId)_\(checkpointId)"
             let checkpointRef = db.collection("checkpoints").document(docId)
-        
-        // ドキュメントが存在するか確認
-        checkpointRef.getDocument { document, error in
-            if let error = error {
-                print("Error retrieving document: \(error.localizedDescription)")
-                return
-            }
             
-            // ドキュメントが存在しない場合、新たにデータをセット
-            if document?.exists == false {
-                let timestamp = Timestamp(date: Date())
-                checkpointRef.setData([
-                    "checkpointsId": checkpointId,
-                    "checkpointsName": checkpointName,
-                    "timestamp": timestamp,
-                    "userId": userId
-                ]) { err in
-                    if let err = err {
-                        print("Error setting document: \(err)")
-                    } else {
-                        print("Document successfully set with ID: \(docId)")
-                    }
+            // ドキュメントが存在するか確認
+            checkpointRef.getDocument { document, error in
+                if let error = error {
+                    print("Error retrieving document: \(error.localizedDescription)")
+                    return
                 }
-                // 追加の処理、例えば画像のダウンロードと編集を行う
-                EditCardsManager.shared.editAndUploadImage(checkpointId: String(checkpointId), userId: userId, date: Date())
+                
+                // ドキュメントが存在しない場合、新たにデータをセット
+                if document?.exists == false {
+                    let timestamp = Timestamp(date: Date())
+                    checkpointRef.setData([
+                        "checkpointsId": checkpointId,
+                        "checkpointsName": checkpointName,
+                        "timestamp": timestamp,
+                        "userId": userId,
+                        "userName": userName
+                    ]) { err in
+                        if let err = err {
+                            print("Error setting document: \(err)")
+                        } else {
+                            print("Document successfully set with ID: \(docId)")
+                        }
+                    }
+                    // 追加の処理、例えば画像のダウンロードと編集を行う
+                    EditCardsManager.shared.editAndUploadImage(checkpointId: String(checkpointId), userId: userId, date: Date())
+                }
             }
         }
     }
