@@ -74,7 +74,7 @@ class EditCardsManager {
             }
         }
     }
-
+    
     // 画像にユーザー名と日時のテキストを追加するメソッド
     func drawText(image: UIImage, username: String, date: Date) -> UIImage? {
         let userNameAttributes: [NSAttributedString.Key: Any] = [
@@ -100,10 +100,10 @@ class EditCardsManager {
         
         let offset = CGFloat(250) // 左に？ポイント移動
         let userNameStringRect = CGRect(x: (image.size.width - userNameStringSize.width) / 2 - offset, y: image.size.height * 0.80, width: userNameStringSize.width, height: userNameStringSize.height)
-
+        
         let rightOffset = CGFloat(250)  // 右に？ポイント移動
         let dateStringRect = CGRect(x: image.size.width - dateStringSize.width - rightOffset,y: image.size.height * 0.80,width: dateStringSize.width,
-            height: dateStringSize.height)
+                                    height: dateStringSize.height)
         
         userNameString.draw(in: userNameStringRect)
         dateString.draw(in: dateStringRect)
@@ -113,7 +113,7 @@ class EditCardsManager {
         
         return editedImage
     }
-
+    
     private func centeredParagraphStyle() -> NSParagraphStyle {
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
