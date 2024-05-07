@@ -77,15 +77,16 @@ class EditCardsManager {
     
     // 画像にユーザー名と日時のテキストを追加するメソッド
     func drawText(image: UIImage, username: String, date: Date) -> UIImage? {
+        // ユーザー名と日付のスタイルを設定
         let userNameAttributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.systemFont(ofSize: 30, weight: .bold),
-            .foregroundColor: UIColor(red: 241/255, green: 196/255, blue: 15/255, alpha: 1),
+            .font: UIFont.systemFont(ofSize: 44, weight: .bold),
+            .foregroundColor: UIColor.white,
             .paragraphStyle: centeredParagraphStyle()
         ]
         
         let dateAttributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.systemFont(ofSize: 20, weight: .regular),
-            .foregroundColor: UIColor(red: 236/255, green: 240/255, blue: 241/255, alpha: 1),
+            .font: UIFont.systemFont(ofSize: 44, weight: .regular),
+            .foregroundColor: UIColor.white,
             .paragraphStyle: centeredParagraphStyle()
         ]
         
@@ -95,16 +96,16 @@ class EditCardsManager {
         let userNameString = NSAttributedString(string: username, attributes: userNameAttributes)
         let dateString = NSAttributedString(string: DateFormatter.localizedString(from: date, dateStyle: .long, timeStyle: .none), attributes: dateAttributes)
         
+        // テキストを描画する位置を計算
         let userNameStringSize = userNameString.size()
         let dateStringSize = dateString.size()
         
         let offset = CGFloat(250) // 左に？ポイント移動
         let userNameStringRect = CGRect(x: (image.size.width - userNameStringSize.width) / 2 - offset, y: image.size.height * 0.80, width: userNameStringSize.width, height: userNameStringSize.height)
         
-        let rightOffset = CGFloat(250)  // 右に？ポイント移動
-        let dateStringRect = CGRect(x: image.size.width - dateStringSize.width - rightOffset,y: image.size.height * 0.80,width: dateStringSize.width,
-                                    height: dateStringSize.height)
+        let dateStringRect = CGRect(x: (image.size.width - dateStringSize.width) / 2, y: image.size.height * 0.86, width: dateStringSize.width, height: dateStringSize.height)
         
+        // テキストを描画
         userNameString.draw(in: userNameStringRect)
         dateString.draw(in: dateStringRect)
         
